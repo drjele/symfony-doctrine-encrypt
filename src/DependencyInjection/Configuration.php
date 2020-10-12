@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Drjele\DoctrineEncrypt\DependencyInjection;
 
-use Drjele\DoctrineEncrypt\Service\EncryptorService;
+use Drjele\DoctrineEncrypt\Service\AES256EncryptorService;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->children()
             ->scalarNode('salt')->isRequired()->end()
-            ->scalarNode('encryptor_service_class')->defaultValue(EncryptorService::class)->end();
+            ->scalarNode('encryptor_service_class')->defaultValue(AES256EncryptorService::class)->end();
 
         return $treeBuilder;
     }

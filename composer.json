@@ -16,6 +16,7 @@
     ],
     "require": {
         "php": "^7.4",
+        "ext-openssl": "*",
         "doctrine/doctrine-bundle": "^2.1"
     },
     "require-dev": {
