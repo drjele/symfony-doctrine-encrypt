@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Copyright (c) Constantin Adrian Jeledintan
+ * Copyright (c) Adrian Jeledintan
  */
 
 namespace Drjele\DoctrineEncrypt\Contract;

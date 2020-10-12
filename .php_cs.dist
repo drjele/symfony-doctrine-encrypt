@@ -1,5 +1,5 @@
 <?php
-$header = 'Copyright (c) Constantin Adrian Jeledintan';
+$header = 'Copyright (c) Adrian Jeledintan';
 
 $finder = PhpCsFixer\Finder::create()
     ->exclude([__DIR__ . '/vendor/'])

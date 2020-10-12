@@ -7,10 +7,10 @@
         "encrypt"
     ],
     "homepage": "https://gitlab.com/drjele-utility/doctrine-encrypt",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
-            "name": "Constantin Adrian Jeledintan",
+            "name": "Adrian Jeledintan",
             "email": "adrian.jeledintan@gmail.com"
         }
     ],
