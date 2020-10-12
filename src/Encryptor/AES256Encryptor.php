@@ -91,7 +91,7 @@ class AES256Encryptor extends AbstractEncryptor
         return unserialize($plaintext);
     }
 
-    protected function generateNonce(): string
+    private function generateNonce(): string
     {
         $size = openssl_cipher_iv_length(static::ALGORITHM);
 
