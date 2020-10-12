@@ -29,7 +29,7 @@ class DrjeleDoctrineEncryptExtension extends Extension
 
         $container->setParameter('drjele_doctrine_encrypt.salt', $config['salt']);
 
-        $alias = $container->setAlias(EncryptorInterface::class, $config['encryptor_encryptor_class']);
+        $alias = $container->setAlias(EncryptorInterface::class, $config['encryptor_class']);
         /* this is done to be able to get it from the container */
         $alias->setPublic(true)
             ->setPrivate(false);

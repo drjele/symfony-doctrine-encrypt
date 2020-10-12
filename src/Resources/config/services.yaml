@@ -1,4 +1,4 @@
-encryptors:
+services:
     Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor:
         arguments:
             $salt: '%drjele_doctrine_encrypt.salt%'

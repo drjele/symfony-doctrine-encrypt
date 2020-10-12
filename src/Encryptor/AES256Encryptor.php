@@ -46,7 +46,7 @@ class AES256Encryptor extends AbstractEncryptor
     public function decrypt(string $data): string
     {
         if (0 !== mb_strpos($data, "<ENC>\0", 0)) {
-            /** @todo have an option in the bundle config to return or throw exception */
+            /* @todo have an option in the bundle config to return or throw exception */
             return $data;
         }
 

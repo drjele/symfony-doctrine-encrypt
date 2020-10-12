@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->children()
             ->scalarNode('salt')->isRequired()->end()
-            ->scalarNode('encryptor_encryptor_class')->defaultValue(AES256Encryptor::class)->end();
+            ->scalarNode('encryptor_class')->defaultValue(AES256Encryptor::class)->end();
 
         return $treeBuilder;
     }
