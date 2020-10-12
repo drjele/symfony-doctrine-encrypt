@@ -30,11 +30,11 @@ class DrjeleDoctrineEncryptBundle extends Bundle
             Type::addType(EncryptedType::NAME, EncryptedType::class);
         }
 
-        /** @var EncryptorInterface $encryptorService */
-        $encryptorService = $this->container->get(EncryptorInterface::class);
+        /** @var EncryptorInterface $encryptor */
+        $encryptor = $this->container->get(EncryptorInterface::class);
 
         /** @var EncryptedType $encryptedType */
         $encryptedType = Type::getType(EncryptedType::NAME);
-        $encryptedType->setEncryptor($encryptorService);
+        $encryptedType->setEncryptor($encryptor);
     }
 }

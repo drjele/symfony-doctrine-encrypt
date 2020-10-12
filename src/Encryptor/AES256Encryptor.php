@@ -6,19 +6,19 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Service;
+namespace Drjele\DoctrineEncrypt\Encryptor;
 
 use Drjele\DoctrineEncrypt\Exception\Exception;
 
-class AES256EncryptorService extends AbstractEncryptorService
+class AES256Encryptor extends AbstractEncryptor
 {
-    const ALGORITHM = 'AES-256-GCM';
-    const HASH_ALGORITHM = 'sha256';
-    const MINIMUM_KEY_LENGTH = 32;
+    private const ALGORITHM = 'AES-256-GCM';
+    private const HASH_ALGORITHM = 'sha256';
+    private const MINIMUM_KEY_LENGTH = 32;
 
     public function __construct(string $salt)
     {
-        if (!\is_string($salt) || mb_strlen($salt) < self::MINIMUM_KEY_LENGTH) {
+        if (!\is_string($salt) || mb_strlen($salt) < static::MINIMUM_KEY_LENGTH) {
             throw new Exception('Invalid encryption salt');
         }
 
@@ -32,13 +32,13 @@ class AES256EncryptorService extends AbstractEncryptorService
 
         $ciphertext = openssl_encrypt(
             $plaintext,
-            self::ALGORITHM,
+            static::ALGORITHM,
             $this->salt,
             OPENSSL_RAW_DATA,
             $nonce
         );
 
-        $mac = hash(self::HASH_ALGORITHM, self::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
+        $mac = hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
         return "<ENC>\0" . base64_encode($ciphertext) . "\0" . base64_encode($mac) . "\0" . base64_encode($nonce);
     }
@@ -46,7 +46,8 @@ class AES256EncryptorService extends AbstractEncryptorService
     public function decrypt(string $data): string
     {
         if (0 !== mb_strpos($data, "<ENC>\0", 0)) {
-            throw new Exception('Could not validate ciphertext');
+            /** @todo have an option in the bundle config to return or throw exception */
+            return $data;
         }
 
         $parts = explode("\0", $data);
@@ -69,7 +70,7 @@ class AES256EncryptorService extends AbstractEncryptorService
             throw new Exception('Could not validate ciphertext');
         }
 
-        $expected = hash(self::HASH_ALGORITHM, self::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
+        $expected = hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
         if (!hash_equals($expected, $mac)) {
             throw new Exception('Invalid MAC');
@@ -77,7 +78,7 @@ class AES256EncryptorService extends AbstractEncryptorService
 
         $plaintext = openssl_decrypt(
             $ciphertext,
-            self::ALGORITHM,
+            static::ALGORITHM,
             $this->salt,
             OPENSSL_RAW_DATA,
             $nonce
@@ -92,7 +93,7 @@ class AES256EncryptorService extends AbstractEncryptorService
 
     protected function generateNonce(): string
     {
-        $size = openssl_cipher_iv_length(self::ALGORITHM);
+        $size = openssl_cipher_iv_length(static::ALGORITHM);
 
         return random_bytes($size);
     }

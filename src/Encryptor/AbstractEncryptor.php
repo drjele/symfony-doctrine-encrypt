@@ -6,11 +6,11 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Service;
+namespace Drjele\DoctrineEncrypt\Encryptor;
 
 use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 
-abstract class AbstractEncryptorService implements EncryptorInterface
+abstract class AbstractEncryptor implements EncryptorInterface
 {
     protected string $salt;
 

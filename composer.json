@@ -3,8 +3,10 @@
     "type": "symfony-bundle",
     "description": "Doctrine encrypt type",
     "keywords": [
+        "symfony",
         "doctrine",
-        "encrypt"
+        "encrypt",
+        "decrypt"
     ],
     "homepage": "https://gitlab.com/drjele-utility/doctrine-encrypt",
     "license": "MIT",

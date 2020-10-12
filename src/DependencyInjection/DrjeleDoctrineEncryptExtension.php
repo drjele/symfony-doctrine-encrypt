@@ -22,14 +22,14 @@ class DrjeleDoctrineEncryptExtension extends Extension
             $container,
             new FileLocator(__DIR__ . '/../Resources/config')
         );
-        $loader->load('services.yaml');
+        $loader->load('encryptors.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('drjele_doctrine_encrypt.salt', $config['salt']);
 
-        $alias = $container->setAlias(EncryptorInterface::class, $config['encryptor_service_class']);
+        $alias = $container->setAlias(EncryptorInterface::class, $config['encryptor_encryptor_class']);
         /* this is done to be able to get it from the container */
         $alias->setPublic(true)
             ->setPrivate(false);

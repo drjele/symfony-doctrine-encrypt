@@ -1,7 +1,7 @@
-services:
-    Drjele\DoctrineEncrypt\Service\AbstractEncryptorService:
+encryptors:
+    Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor:
         arguments:
             $salt: '%drjele_doctrine_encrypt.salt%'
 
-    Drjele\DoctrineEncrypt\Service\AES256EncryptorService:
-        parent: Drjele\DoctrineEncrypt\Service\AbstractEncryptorService
+    Drjele\DoctrineEncrypt\Encryptor\AES256Encryptor:
+        parent: Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor
