@@ -44,6 +44,9 @@
     "prefer-stable": true,
     "extra": {
         "exclude": [
+            "/scripts",
+            "/.php_cs.dist",
+            "/phpcs.xml.dist"
         ]
     }
 }
