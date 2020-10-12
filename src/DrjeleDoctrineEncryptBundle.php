@@ -6,18 +6,25 @@ declare(strict_types=1);
  * Copyright (c) Constantin Adrian Jeledintan
  */
 
-namespace Drjele\Utility\DoctrineEncrypt;
+namespace Drjele\DoctrineEncrypt;
 
 use Doctrine\DBAL\Types\Type;
-use Drjele\Utility\DoctrineEncrypt\Contract\EncryptorInterface;
-use Drjele\Utility\DoctrineEncrypt\Type\EncryptedType;
+use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
+use Drjele\DoctrineEncrypt\Type\EncryptedType;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class DrjeleUtilityDoctrineEncryptBundle extends Bundle
+class DrjeleDoctrineEncryptBundle extends Bundle
 {
     public function boot()
     {
         parent::boot();
+
+        $this->registerType();
+    }
+
+    private function registerType(): void
+    {
+        /* this required because of how doctrine instantiates its types */
 
         if (!Type::hasType(EncryptedType::NAME)) {
             Type::addType(EncryptedType::NAME, EncryptedType::class);

@@ -1,5 +1,5 @@
 {
-    "name": "drjele/utility-doctrine-encrypt",
+    "name": "drjele/doctrine-encrypt",
     "type": "symfony-bundle",
     "description": "Doctrine encrypt type",
     "keywords": [
@@ -26,7 +26,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Drjele\\Utility\\DoctrineEncrypt\\": "src/"
+            "Drjele\\DoctrineEncrypt\\": "src/"
         }
     },
     "scripts": {

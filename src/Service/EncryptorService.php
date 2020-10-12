@@ -6,19 +6,10 @@ declare(strict_types=1);
  * Copyright (c) Constantin Adrian Jeledintan
  */
 
-namespace Drjele\Utility\DoctrineEncrypt\Service;
+namespace Drjele\DoctrineEncrypt\Service;
 
-use Drjele\Utility\DoctrineEncrypt\Contract\EncryptorInterface;
-
-class EncryptorService implements EncryptorInterface
+class EncryptorService extends AbstractEncryptorService
 {
-    private string $salt;
-
-    public function __construct(string $salt)
-    {
-        $this->salt = $salt;
-    }
-
     public function encrypt(string $data): string
     {
         return $data;

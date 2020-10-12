@@ -6,11 +6,12 @@ declare(strict_types=1);
  * Copyright (c) Constantin Adrian Jeledintan
  */
 
-namespace Drjele\Utility\DoctrineEncrypt\Type;
+namespace Drjele\DoctrineEncrypt\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
-use Drjele\Utility\DoctrineEncrypt\Contract\EncryptorInterface;
+use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
+use Drjele\DoctrineEncrypt\Exception\Exception;
 
 class EncryptedType extends StringType
 {
@@ -47,7 +48,7 @@ class EncryptedType extends StringType
     private function validate(): void
     {
         if (false == isset($this->encryptor)) {
-            throw new \Exception('The encryptor was not set!');
+            throw new Exception('The encryptor was not set!');
         }
     }
 }

@@ -6,9 +6,9 @@ declare(strict_types=1);
  * Copyright (c) Constantin Adrian Jeledintan
  */
 
-namespace Drjele\Utility\DoctrineEncrypt\DependencyInjection;
+namespace Drjele\DoctrineEncrypt\DependencyInjection;
 
-use Drjele\Utility\DoctrineEncrypt\Service\EncryptorService;
+use Drjele\DoctrineEncrypt\Service\EncryptorService;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -16,7 +16,7 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('drjele_utility_doctrine_encrypt');
+        $treeBuilder = new TreeBuilder('drjele_doctrine_encrypt');
 
         $treeBuilder->getRootNode()
             ->children()
