@@ -32,13 +32,22 @@ class EncryptedType extends StringType
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        $platform->getEventManager()->getListeners('');
+        $this->validate();
 
         return (null === $value) ? null : $this->encryptor->encrypt((string)$value);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?string
     {
+        $this->validate();
+
         return (null === $value) ? null : $this->encryptor->decrypt((string)$value);
+    }
+
+    private function validate(): void
+    {
+        if (false == isset($this->encryptor)) {
+            throw new \Exception('The encryptor was not set!');
+        }
     }
 }

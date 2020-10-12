@@ -24,9 +24,7 @@ class DrjeleUtilityDoctrineEncryptBundle extends Bundle
         }
 
         /** @var EncryptorInterface $encryptorService */
-        $encryptorService = $this->container->get(
-            $this->container->getParameter('drjele_utility_doctrine_encrypt.encryptor_service')
-        );
+        $encryptorService = $this->container->get(EncryptorInterface::class);
 
         /** @var EncryptedType $encryptedType */
         $encryptedType = Type::getType(EncryptedType::NAME);

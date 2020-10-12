@@ -1,5 +1,4 @@
 services:
     Drjele\Utility\DoctrineEncrypt\Service\EncryptorService:
-        public: true
         arguments:
-            $salt: 'drjele_utility_doctrine_encrypt.salt'
+            $salt: '%drjele_utility_doctrine_encrypt.salt%'
