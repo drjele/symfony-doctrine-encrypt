@@ -1,7 +1,19 @@
 services:
     Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor:
+        abstract: true
         arguments:
             $salt: '%drjele_doctrine_encrypt.salt%'
 
     Drjele\DoctrineEncrypt\Encryptor\AES256Encryptor:
         parent: Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor
+
+    Drjele\DoctrineEncrypt\Command\AbstractCommand:
+        abstract: true
+        tags:
+            - { name: 'console.command' }
+
+    Drjele\DoctrineEncrypt\Command\EncryptDatabaseCommand:
+        parent: Drjele\DoctrineEncrypt\Command\AbstractCommand
+
+    Drjele\DoctrineEncrypt\Command\DecryptDatabaseCommand:
+        parent: Drjele\DoctrineEncrypt\Command\AbstractCommand
