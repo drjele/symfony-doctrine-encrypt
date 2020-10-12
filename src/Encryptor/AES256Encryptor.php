@@ -12,7 +12,7 @@ use Drjele\DoctrineEncrypt\Exception\Exception;
 
 class AES256Encryptor extends AbstractEncryptor
 {
-    private const ALGORITHM = 'AES-256-GCM';
+    private const ALGORITHM = 'AES-256-CTR';
     private const HASH_ALGORITHM = 'sha256';
     private const MINIMUM_KEY_LENGTH = 32;
 
