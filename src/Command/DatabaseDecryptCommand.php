@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
-class DecryptDatabaseCommand extends AbstractCommand
+class DatabaseDecryptCommand extends AbstractDatabaseCommand
 {
     protected static $defaultName = 'drjele:doctrine:database:decrypt';
 

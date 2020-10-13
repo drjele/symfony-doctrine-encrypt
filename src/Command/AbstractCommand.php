@@ -33,25 +33,31 @@ abstract class AbstractCommand extends Command
 
     protected function writeln(string $text): void
     {
-        $this->io->writeln(
-            sprintf(
-                '<bg=blue>[%s][%s]</> %s',
-                (new DateTime())->format('H:i:s'),
-                $this->getMemoryUsage(),
-                $text
-            )
-        );
+        $this->io->writeln($this->format($text));
     }
 
     protected function error(string $text): void
     {
-        $this->io->error(
-            sprintf(
-                '[%s][%s] %s',
-                (new DateTime())->format('H:i:s'),
-                $this->getMemoryUsage(),
-                $text
-            )
+        $this->io->error($this->format($text));
+    }
+
+    protected function warning(string $text): void
+    {
+        $this->io->warning($this->format($text));
+    }
+
+    protected function success(string $text): void
+    {
+        $this->io->success($this->format($text));
+    }
+
+    private function format(string $text): string
+    {
+        return sprintf(
+            '[%s][%s] %s',
+            (new DateTime())->format('H:i:s'),
+            $this->getMemoryUsage(),
+            $text
         );
     }
 

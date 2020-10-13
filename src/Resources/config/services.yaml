@@ -10,12 +10,18 @@ services:
     Drjele\DoctrineEncrypt\Command\AbstractCommand:
         abstract: true
 
-    Drjele\DoctrineEncrypt\Command\EncryptDatabaseCommand:
+    Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand:
+        abstract: true
         parent: Drjele\DoctrineEncrypt\Command\AbstractCommand
+        arguments:
+            $managerRegistry: '@Doctrine\Persistence\ManagerRegistry'
+
+    Drjele\DoctrineEncrypt\Command\DatabaseEncryptCommand:
+        parent: Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand
         tags:
             - { name: 'console.command' }
 
-    Drjele\DoctrineEncrypt\Command\DecryptDatabaseCommand:
-        parent: Drjele\DoctrineEncrypt\Command\AbstractCommand
+    Drjele\DoctrineEncrypt\Command\DatabaseDecryptCommand:
+        parent: Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand
         tags:
             - { name: 'console.command' }
