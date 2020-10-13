@@ -10,6 +10,8 @@ namespace Drjele\DoctrineEncrypt\Encryptor;
 
 use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 use Drjele\DoctrineEncrypt\Exception\Exception;
+use Drjele\DoctrineEncrypt\Type\AbstractType;
+use Drjele\DoctrineEncrypt\Type\AES256Type;
 
 class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
 {
@@ -25,6 +27,11 @@ class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
         }
 
         parent::__construct($salt);
+    }
+
+    public function getType(): ?AbstractType
+    {
+        return new AES256Type();
     }
 
     public function encrypt(string $data): string

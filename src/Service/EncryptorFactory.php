@@ -19,7 +19,7 @@ class EncryptorFactory
     /** @var EncryptorInterface[] */
     private array $encryptors;
 
-    public function __construct(array $encryptors)
+    public function __construct(iterable $encryptors)
     {
         /* @todo register only the configured encryptors */
 
@@ -75,5 +75,16 @@ class EncryptorFactory
         }
 
         throw new EncryptorNotFoundException(sprintf('no encyptor found for type "%s"', $typeName));
+    }
+
+    public function getTypes(): array
+    {
+        $types = [];
+
+        foreach ($this->encryptors as $encryptor) {
+            $types[] = $encryptor->getType()->getName();
+        }
+
+        return $types;
     }
 }

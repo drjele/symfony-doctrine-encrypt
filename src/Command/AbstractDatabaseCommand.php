@@ -11,15 +11,19 @@ namespace Drjele\DoctrineEncrypt\Command;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
-use Drjele\DoctrineEncrypt\Type\AbstractType;
+use Drjele\DoctrineEncrypt\Service\EncryptorFactory;
 
 abstract class AbstractDatabaseCommand extends AbstractCommand
 {
     protected ManagerRegistry $managerRegistry;
+    protected EncryptorFactory $encryptorFactory;
 
-    public function __construct(ManagerRegistry $managerRegistry)
-    {
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        EncryptorFactory $encryptorFactory
+    ) {
         $this->managerRegistry = $managerRegistry;
+        $this->encryptorFactory = $encryptorFactory;
 
         parent::__construct();
     }
@@ -33,6 +37,7 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
     /** @return EntityMetadataDto[] */
     protected function getEntitiesWithEncryption(): array
     {
+        $encryptedType = $this->encryptorFactory->getTypes();
         $entites = [];
 
         foreach ($this->getManager()->getMetadataFactory()->getAllMetadata() as $classMetadata) {
@@ -41,7 +46,7 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
             foreach ($classMetadata->getFieldNames() as $fieldName) {
                 $type = $classMetadata->getTypeOfField($fieldName);
 
-                if (AbstractType::NAME === $type) {
+                if (\in_array($type, $encryptedType)) {
                     $encryptionFields[] = $fieldName;
                 }
             }

@@ -45,7 +45,7 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
     {
         $className = $entityMetadataDto->getClassMetadata()->getName();
 
-        $this->io->section('[ENCRYPT]' . $className);
+        $this->io->section('[ENCRYPT] ' . $className);
 
         $fields = array_merge(
             $entityMetadataDto->getClassMetadata()->getIdentifier(),

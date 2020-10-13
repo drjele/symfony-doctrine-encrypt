@@ -1,8 +1,5 @@
 services:
     _instanceof:
-        Drjele\DoctrineEncrypt\Command\AbstractCommand:
-            tags:
-                - { name: 'console.command' }
         Drjele\DoctrineEncrypt\Contract\EncryptorInterface:
             tags:
                 - { name: 'drjele.doctrine.encryptor' }
@@ -16,15 +13,22 @@ services:
         parent: Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor
 
     Drjele\DoctrineEncrypt\Service\EncryptorFactory:
+        public: true
         arguments:
             $encryptors: !tagged_iterator drjele.doctrine.encryptor
 
     Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand:
+        abstract: true
         arguments:
             $managerRegistry: '@Doctrine\Persistence\ManagerRegistry'
+            $encryptorFactory: '@Drjele\DoctrineEncrypt\Service\EncryptorFactory'
 
     Drjele\DoctrineEncrypt\Command\DatabaseEncryptCommand:
         parent: Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand
+        tags:
+            - { name: 'console.command' }
 
     Drjele\DoctrineEncrypt\Command\DatabaseDecryptCommand:
         parent: Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand
+        tags:
+            - { name: 'console.command' }

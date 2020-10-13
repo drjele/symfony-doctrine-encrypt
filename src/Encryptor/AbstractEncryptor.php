@@ -18,6 +18,4 @@ abstract class AbstractEncryptor
     {
         $this->salt = $salt;
     }
-
-    abstract public static function getEncryption(): string;
 }
