@@ -8,11 +8,11 @@ declare(strict_types=1);
 
 namespace Drjele\DoctrineEncrypt\Contract;
 
-use Drjele\DoctrineEncrypt\Type\AbstractType;
-
 interface EncryptorInterface
 {
-    public function getType(): ?AbstractType;
+    public function getTypeClass(): ?string;
+
+    public function getTypeName(): ?string;
 
     public function encrypt(string $data): string;
 

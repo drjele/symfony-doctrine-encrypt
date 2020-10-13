@@ -37,7 +37,7 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
     /** @return EntityMetadataDto[] */
     protected function getEntitiesWithEncryption(): array
     {
-        $encryptedType = $this->encryptorFactory->getTypes();
+        $encryptedTypes = $this->encryptorFactory->getTypeNames();
         $entites = [];
 
         foreach ($this->getManager()->getMetadataFactory()->getAllMetadata() as $classMetadata) {
@@ -46,8 +46,8 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
             foreach ($classMetadata->getFieldNames() as $fieldName) {
                 $type = $classMetadata->getTypeOfField($fieldName);
 
-                if (\in_array($type, $encryptedType)) {
-                    $encryptionFields[] = $fieldName;
+                if (\in_array($type, $encryptedTypes)) {
+                    $encryptionFields[$fieldName] = $type;
                 }
             }
 

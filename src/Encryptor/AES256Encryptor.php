@@ -10,7 +10,6 @@ namespace Drjele\DoctrineEncrypt\Encryptor;
 
 use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 use Drjele\DoctrineEncrypt\Exception\Exception;
-use Drjele\DoctrineEncrypt\Type\AbstractType;
 use Drjele\DoctrineEncrypt\Type\AES256Type;
 
 class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
@@ -29,9 +28,9 @@ class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
         parent::__construct($salt);
     }
 
-    public function getType(): ?AbstractType
+    public function getTypeClass(): ?string
     {
-        return new AES256Type();
+        return AES256Type::class;
     }
 
     public function encrypt(string $data): string
@@ -90,7 +89,7 @@ class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
         $expected = hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
         if (!hash_equals($expected, $mac)) {
-            throw new Exception('Invalid MAC');
+            throw new Exception('Invalid mac');
         }
 
         $plaintext = openssl_decrypt(

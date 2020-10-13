@@ -12,6 +12,16 @@ use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 
 class FakeEncryptor implements EncryptorInterface
 {
+    public function getTypeClass(): ?string
+    {
+        return null;
+    }
+
+    public function getTypeName(): ?string
+    {
+        return null;
+    }
+
     public function encrypt(string $data): string
     {
         return $data;

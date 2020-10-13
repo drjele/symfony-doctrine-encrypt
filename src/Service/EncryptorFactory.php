@@ -12,47 +12,61 @@ use Doctrine\DBAL\Types\Type;
 use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 use Drjele\DoctrineEncrypt\Exception\DuplicateEncryptorException;
 use Drjele\DoctrineEncrypt\Exception\EncryptorNotFoundException;
+use Drjele\DoctrineEncrypt\Exception\TypeNotFoundException;
 use Drjele\DoctrineEncrypt\Type\AbstractType;
 
 class EncryptorFactory
 {
     /** @var EncryptorInterface[] */
     private array $encryptors;
+    private array $typeNames;
 
     public function __construct(iterable $encryptors)
     {
         /* @todo register only the configured encryptors */
 
         $this->encryptors = [];
-
-        $types = [];
+        $this->typeNames = [];
 
         /** @var EncryptorInterface $encryptor */
         foreach ($encryptors as $encryptor) {
-            $typeName = $encryptor->getType()->getName();
-            if (\in_array($typeName, $types)) {
-                throw new DuplicateEncryptorException(sprintf('multiple encryptors defined for type "%s"', $typeName));
+            $typeName = $encryptor->getTypeName();
+            if ($typeName) {
+                if (\in_array($typeName, $this->typeNames)) {
+                    throw new DuplicateEncryptorException(
+                        sprintf('Multiple encryptors defined for type "%s"', $typeName)
+                    );
+                }
+
+                $this->typeNames[] = $typeName;
             }
 
             $this->encryptors[\get_class($encryptor)] = $encryptor;
         }
     }
 
+    public function getTypeNames(): ?array
+    {
+        return $this->typeNames;
+    }
+
     public function registerTypes(): void
     {
         foreach ($this->encryptors as $encryptor) {
-            $type = $encryptor->getType();
+            $typeClass = $encryptor->getTypeClass();
 
-            if (!$type) {
+            if (!$typeClass) {
                 continue;
             }
 
-            if (!Type::hasType($type->getName())) {
-                Type::addType($type->getName(), \get_class($type));
+            $typeName = $encryptor->getTypeName();
+
+            if (!Type::hasType($typeName)) {
+                Type::addType($typeName, $typeClass);
             }
 
             /** @var AbstractType $encryptedType */
-            $encryptedType = Type::getType($type->getName());
+            $encryptedType = Type::getType($typeName);
             $encryptedType->setEncryptor($encryptor);
         }
     }
@@ -60,7 +74,7 @@ class EncryptorFactory
     public function get(string $encryptorClass): EncryptorInterface
     {
         if (!isset($this->encryptors[$encryptorClass])) {
-            throw new EncryptorNotFoundException(sprintf('no encyptor found for "%s"', $encryptorClass));
+            throw new EncryptorNotFoundException(sprintf('No encyptor found for "%s"', $encryptorClass));
         }
 
         return $this->encryptors[$encryptorClass];
@@ -69,22 +83,20 @@ class EncryptorFactory
     public function getByType(string $typeName): EncryptorInterface
     {
         foreach ($this->encryptors as $encryptor) {
-            if ($encryptor->getType()->getName() == $typeName) {
+            if ($encryptor->getTypeName() == $typeName) {
                 return $encryptor;
             }
         }
 
-        throw new EncryptorNotFoundException(sprintf('no encyptor found for type "%s"', $typeName));
+        throw new EncryptorNotFoundException(sprintf('No encyptor found for type "%s"', $typeName));
     }
 
-    public function getTypes(): array
+    public function getType(string $typeName): AbstractType
     {
-        $types = [];
-
-        foreach ($this->encryptors as $encryptor) {
-            $types[] = $encryptor->getType()->getName();
+        if (!\in_array($typeName, $this->typeNames)) {
+            throw new TypeNotFoundException(sprintf('No type found for type "%s"', $typeName));
         }
 
-        return $types;
+        return Type::getType($typeName);
     }
 }

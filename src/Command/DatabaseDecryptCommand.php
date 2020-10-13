@@ -11,6 +11,7 @@ namespace Drjele\DoctrineEncrypt\Command;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\UnitOfWork;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
+use Drjele\DoctrineEncrypt\Encryptor\FakeEncryptor;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
@@ -63,16 +64,42 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
             ->select('PARTIAL e.{' . implode(', ', $fields) . '}')
             ->getQuery()->getResult();
 
+        $originalEntityData = [];
+        foreach ($entityMetadataDto->getEncryptionFields() as $field => $type) {
+            $originalEntityData[$field] = null;
+        }
+
+        $resetedEncryptors = $this->resetEncryptors($entityMetadataDto->getEncryptionFields());
+
         foreach ($entities as $entity) {
-            $data = [];
-            foreach ($entityMetadataDto->getEncryptionFields() as $field) {
-                $data[$field] = null;
-            }
-            $unitOfWork->setOriginalEntityData($entity, $data);
+            $unitOfWork->setOriginalEntityData($entity, $originalEntityData);
 
             $em->persist($entity);
         }
 
         $em->flush();
+
+        $this->restoreEncryptors($resetedEncryptors);
+    }
+
+    private function resetEncryptors(array $encryptionFields): array
+    {
+        $resetedEncryptors = [];
+
+        foreach ($encryptionFields as $field => $typeName) {
+            $type = $this->encryptorFactory->getType($typeName);
+
+            $resetedEncryptors[$typeName] = $type->getEncryptor();
+
+            $type->setEncryptor(
+                $this->encryptorFactory->get(FakeEncryptor::class)
+            );
+        }
+
+        return $resetedEncryptors;
+    }
+
+    private function restoreEncryptors(array $resetedEncryptors): void
+    {
     }
 }

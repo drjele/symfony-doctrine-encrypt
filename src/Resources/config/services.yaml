@@ -12,6 +12,8 @@ services:
     Drjele\DoctrineEncrypt\Encryptor\AES256Encryptor:
         parent: Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor
 
+    Drjele\DoctrineEncrypt\Encryptor\FakeEncryptor: ~
+
     Drjele\DoctrineEncrypt\Service\EncryptorFactory:
         public: true
         arguments:

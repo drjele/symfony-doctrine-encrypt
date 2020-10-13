@@ -10,6 +10,31 @@ I am trying to solve a few problems that i found with the current offerings:
 * have encrypt and decrypt available if using entities or just selecting fields.
 * easy where (_for the moment the parameters have to be encrypted before setting them_).
 
+## Usage
+The value on the entity will always be unencrypted.
+
+```php
+class Customer
+{
+    /**
+     * @ORM\Column(type="encryptedAES256")
+     */
+    private string $name;
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+}
+```
+
 ## Todo
 * easy where - pass the unencrypted params and have them automatically encrypt.
 * multiple encryptors - have the possibility to encrypt different fields with different algorithms.

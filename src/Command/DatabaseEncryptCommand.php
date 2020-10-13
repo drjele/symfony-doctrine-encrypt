@@ -49,7 +49,7 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
 
         $fields = array_merge(
             $entityMetadataDto->getClassMetadata()->getIdentifier(),
-            $entityMetadataDto->getEncryptionFields()
+            array_keys($entityMetadataDto->getEncryptionFields())
         );
 
         $em = $this->getManager();
@@ -63,12 +63,13 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
             ->select('PARTIAL e.{' . implode(', ', $fields) . '}')
             ->getQuery()->getResult();
 
+        $originalEntityData = [];
+        foreach ($entityMetadataDto->getEncryptionFields() as $field => $type) {
+            $originalEntityData[$field] = null;
+        }
+
         foreach ($entities as $entity) {
-            $data = [];
-            foreach ($entityMetadataDto->getEncryptionFields() as $field) {
-                $data[$field] = null;
-            }
-            $unitOfWork->setOriginalEntityData($entity, $data);
+            $unitOfWork->setOriginalEntityData($entity, $originalEntityData);
 
             $em->persist($entity);
         }

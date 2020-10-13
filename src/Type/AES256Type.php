@@ -10,7 +10,7 @@ namespace Drjele\DoctrineEncrypt\Type;
 
 class AES256Type extends AbstractType
 {
-    protected function getAlgorithm(): string
+    protected static function getShortName(): string
     {
         return 'AES256';
     }

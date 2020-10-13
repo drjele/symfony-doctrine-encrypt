@@ -17,7 +17,12 @@ abstract class AbstractType extends StringType
 {
     private EncryptorInterface $encryptor;
 
-    abstract protected function getAlgorithm(): string;
+    abstract protected static function getShortName(): string;
+
+    final public static function getFullName(): string
+    {
+        return 'encrypted' . static::getShortName();
+    }
 
     final public function getEncryptor(): ?EncryptorInterface
     {
@@ -33,7 +38,7 @@ abstract class AbstractType extends StringType
 
     final public function getName()
     {
-        return 'encrypted' . $this->getAlgorithm();
+        return static::getFullName();
     }
 
     final public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
@@ -53,7 +58,7 @@ abstract class AbstractType extends StringType
     private function validate(): void
     {
         if (false == isset($this->encryptor)) {
-            throw new Exception('The encryptor was not set!');
+            throw new Exception('The encryptor was not set');
         }
     }
 }
