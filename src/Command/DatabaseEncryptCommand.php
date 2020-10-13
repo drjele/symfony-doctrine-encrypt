@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace Drjele\DoctrineEncrypt\Command;
 
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\UnitOfWork;
+use Doctrine\Persistence\ObjectRepository;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,7 +34,7 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
                 $this->encrypt($entityMetadataDto);
             }
         } catch (Throwable $e) {
-            $this->error($e->getMessage());
+            $this->error($e->__toString());
 
             return static::FAILURE;
         }
@@ -41,5 +44,37 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
 
     private function encrypt(EntityMetadataDto $entityMetadataDto): void
     {
+        $className = $entityMetadataDto->getClassMetadata()->getName();
+
+        $this->io->section('[ENCRYPT]' . $className);
+
+        $fields = array_merge(
+            $entityMetadataDto->getClassMetadata()->getIdentifier(),
+            $entityMetadataDto->getEncryptionFields()
+        );
+
+        $em = $this->getManager();
+        /** @var UnitOfWork $unitOfWork */
+        $unitOfWork = $em->getUnitOfWork();
+
+        /** @var EntityRepository $repository */
+        $repository = $em->getRepository($className);
+
+        $entities = $repository->createQueryBuilder('e')
+            ->select('PARTIAL e.{' . implode(', ', $fields) . '}')
+            ->getQuery()->getResult();
+
+        foreach ($entities as $entity) {
+            $data = [];
+            foreach ($entityMetadataDto->getEncryptionFields() as $field) {
+                $data[$field] = null;
+            }
+
+            $unitOfWork->setOriginalEntityData($entity, $data);
+
+            $em->persist($entity);
+        }
+
+        $em->flush();
     }
 }

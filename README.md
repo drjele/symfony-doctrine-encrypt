@@ -12,6 +12,7 @@ I am trying to solve a few problems that i found with the current offerings:
 
 ## Todo
 * easy where - pass the unencrypted params and have them automatically encrypt.
+* multiple encryptors - have the possibility to encrypt different fields with different algorithms.
 
 ## Inspired by
 * https://github.com/GiveMeAllYourCats/DoctrineEncryptBundle
