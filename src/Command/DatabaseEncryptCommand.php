@@ -10,7 +10,6 @@ namespace Drjele\DoctrineEncrypt\Command;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\UnitOfWork;
-use Doctrine\Persistence\ObjectRepository;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -69,7 +68,6 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
             foreach ($entityMetadataDto->getEncryptionFields() as $field) {
                 $data[$field] = null;
             }
-
             $unitOfWork->setOriginalEntityData($entity, $data);
 
             $em->persist($entity);

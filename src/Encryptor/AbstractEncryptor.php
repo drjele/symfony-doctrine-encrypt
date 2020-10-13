@@ -8,9 +8,7 @@ declare(strict_types=1);
 
 namespace Drjele\DoctrineEncrypt\Encryptor;
 
-use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
-
-abstract class AbstractEncryptor implements EncryptorInterface
+abstract class AbstractEncryptor
 {
     protected const ENCRYPTION_MARKER = '<ENC>';
 
@@ -20,4 +18,6 @@ abstract class AbstractEncryptor implements EncryptorInterface
     {
         $this->salt = $salt;
     }
+
+    abstract public static function getEncryption(): string;
 }

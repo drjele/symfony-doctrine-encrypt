@@ -8,9 +8,10 @@ declare(strict_types=1);
 
 namespace Drjele\DoctrineEncrypt\Encryptor;
 
+use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 use Drjele\DoctrineEncrypt\Exception\Exception;
 
-class AES256Encryptor extends AbstractEncryptor
+class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
 {
     private const ALGORITHM = 'AES-256-CTR';
     private const HASH_ALGORITHM = 'sha256';

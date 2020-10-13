@@ -8,9 +8,7 @@ declare(strict_types=1);
 
 namespace Drjele\DoctrineEncrypt;
 
-use Doctrine\DBAL\Types\Type;
-use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
-use Drjele\DoctrineEncrypt\Type\EncryptedType;
+use Drjele\DoctrineEncrypt\Service\EncryptorFactory;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class DrjeleDoctrineEncryptBundle extends Bundle
@@ -19,22 +17,16 @@ class DrjeleDoctrineEncryptBundle extends Bundle
     {
         parent::boot();
 
-        $this->registerType();
+        $this->registerTypes();
     }
 
-    private function registerType(): void
+    private function registerTypes(): void
     {
         /* this required because of how doctrine instantiates its types */
 
-        if (!Type::hasType(EncryptedType::NAME)) {
-            Type::addType(EncryptedType::NAME, EncryptedType::class);
-        }
+        /** @var EncryptorFactory $factory */
+        $factory = $this->container->get(EncryptorFactory::class);
 
-        /** @var EncryptorInterface $encryptor */
-        $encryptor = $this->container->get(EncryptorInterface::class);
-
-        /** @var EncryptedType $encryptedType */
-        $encryptedType = Type::getType(EncryptedType::NAME);
-        $encryptedType->setEncryptor($encryptor);
+        $factory->registerTypes();
     }
 }

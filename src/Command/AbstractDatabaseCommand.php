@@ -11,7 +11,7 @@ namespace Drjele\DoctrineEncrypt\Command;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
-use Drjele\DoctrineEncrypt\Type\EncryptedType;
+use Drjele\DoctrineEncrypt\Type\AbstractType;
 
 abstract class AbstractDatabaseCommand extends AbstractCommand
 {
@@ -41,7 +41,7 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
             foreach ($classMetadata->getFieldNames() as $fieldName) {
                 $type = $classMetadata->getTypeOfField($fieldName);
 
-                if (EncryptedType::NAME === $type) {
+                if (AbstractType::NAME === $type) {
                     $encryptionFields[] = $fieldName;
                 }
             }

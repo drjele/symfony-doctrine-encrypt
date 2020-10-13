@@ -13,32 +13,37 @@ use Doctrine\DBAL\Types\StringType;
 use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 use Drjele\DoctrineEncrypt\Exception\Exception;
 
-class EncryptedType extends StringType
+abstract class AbstractType extends StringType
 {
-    const NAME = 'encrypted';
-
     private EncryptorInterface $encryptor;
 
-    public function setEncryptor(EncryptorInterface $encryptor): self
+    abstract protected function getAlgorithm(): string;
+
+    final public function getEncryptor(): ?EncryptorInterface
+    {
+        return $this->encryptor;
+    }
+
+    final public function setEncryptor(EncryptorInterface $encryptor): self
     {
         $this->encryptor = $encryptor;
 
         return $this;
     }
 
-    public function getName()
+    final public function getName()
     {
-        return static::NAME;
+        return 'encrypted' . $this->getAlgorithm();
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+    final public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         $this->validate();
 
         return (null === $value) ? null : $this->encryptor->encrypt((string)$value);
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): ?string
+    final public function convertToPHPValue($value, AbstractPlatform $platform): ?string
     {
         $this->validate();
 
