@@ -9,11 +9,13 @@ services:
 
     Drjele\DoctrineEncrypt\Command\AbstractCommand:
         abstract: true
-        tags:
-            - { name: 'console.command' }
 
     Drjele\DoctrineEncrypt\Command\EncryptDatabaseCommand:
         parent: Drjele\DoctrineEncrypt\Command\AbstractCommand
+        tags:
+            - { name: 'console.command' }
 
     Drjele\DoctrineEncrypt\Command\DecryptDatabaseCommand:
         parent: Drjele\DoctrineEncrypt\Command\AbstractCommand
+        tags:
+            - { name: 'console.command' }

@@ -15,6 +15,7 @@ class AES256Encryptor extends AbstractEncryptor
     private const ALGORITHM = 'AES-256-CTR';
     private const HASH_ALGORITHM = 'sha256';
     private const MINIMUM_KEY_LENGTH = 32;
+    private const GLUE = "\0";
 
     public function __construct(string $salt)
     {
@@ -40,17 +41,25 @@ class AES256Encryptor extends AbstractEncryptor
 
         $mac = hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
-        return "<ENC>\0" . base64_encode($ciphertext) . "\0" . base64_encode($mac) . "\0" . base64_encode($nonce);
+        return implode(
+            static::GLUE,
+            [
+                static::ENCRYPTION_MARKER,
+                base64_encode($ciphertext),
+                base64_encode($mac),
+                base64_encode($nonce),
+            ]
+        );
     }
 
     public function decrypt(string $data): string
     {
-        if (0 !== mb_strpos($data, "<ENC>\0", 0)) {
+        if (0 !== mb_strpos($data, static::ENCRYPTION_MARKER . static::GLUE, 0)) {
             /* @todo have an option in the bundle config to return or throw exception */
             return $data;
         }
 
-        $parts = explode("\0", $data);
+        $parts = explode(static::GLUE, $data);
 
         if (4 !== \count($parts)) {
             throw new Exception('Could not validate ciphertext');
