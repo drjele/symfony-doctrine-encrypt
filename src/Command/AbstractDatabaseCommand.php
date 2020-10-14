@@ -12,6 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
 use Drjele\DoctrineEncrypt\Service\EncryptorFactory;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 abstract class AbstractDatabaseCommand extends AbstractCommand
 {
@@ -57,5 +58,56 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
         }
 
         return $entites;
+    }
+
+    protected function getOriginalEntityData(EntityMetadataDto $entityMetadataDto): array
+    {
+        $originalEntityData = [];
+
+        foreach ($entityMetadataDto->getEncryptionFields() as $field => $type) {
+            $originalEntityData[$field] = null;
+        }
+
+        return $originalEntityData;
+    }
+
+    protected function askForConfirmation(array $entitiesWithEncryption): void
+    {
+        $confirmationQuestion = new ConfirmationQuestion(
+            $this->getQuestionText(
+                [
+                    \count($entitiesWithEncryption) . ' entities found which are containing properties with encryption types.',
+                    'Wrong settings can mess up your data and it will be unrecoverable.',
+                    'I advise you to make a backup.',
+                    'Continue with this action? (y/yes)',
+                ]
+            ),
+            false
+        );
+
+        $question = $this->getHelper('question');
+        if (!$question->ask($this->input, $this->output, $confirmationQuestion)) {
+            throw new StopException();
+        }
+    }
+
+    private function getQuestionText(array $questionParts): string
+    {
+        /** @todo allow styles */
+        $maxLength = 0;
+        foreach ($questionParts as $questionPart) {
+            $maxLength = max(\strlen($questionPart), $maxLength);
+        }
+
+        $indent = str_repeat(' ', 4);
+
+        foreach ($questionParts as &$questionPart) {
+            $questionPart = $indent . str_pad($questionPart, $maxLength, ' ');
+        }
+        unset($questionPart);
+
+        $questionText = '<question>' . implode(PHP_EOL, $questionParts) . '</question>: ';
+
+        return $questionText;
     }
 }
