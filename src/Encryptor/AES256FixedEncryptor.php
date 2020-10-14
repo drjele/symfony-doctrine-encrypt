@@ -10,9 +10,9 @@ namespace Drjele\DoctrineEncrypt\Encryptor;
 
 use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 use Drjele\DoctrineEncrypt\Exception\Exception;
-use Drjele\DoctrineEncrypt\Type\AES256Type;
+use Drjele\DoctrineEncrypt\Type\AES256FixedType;
 
-class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
+class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterface
 {
     private const ALGORITHM = 'AES-256-CTR';
     private const HASH_ALGORITHM = 'sha256';
@@ -30,12 +30,12 @@ class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
 
     public function getTypeClass(): ?string
     {
-        return AES256Type::class;
+        return AES256FixedType::class;
     }
 
     public function encrypt(string $data): string
     {
-        $nonce = $this->generateNonce();
+        $nonce = $this->generateNonce($data);
         $plaintext = serialize($data);
 
         $ciphertext = openssl_encrypt(
@@ -107,10 +107,16 @@ class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
         return unserialize($plaintext);
     }
 
-    protected function generateNonce(): string
+    protected function generateNonce(string $data): string
     {
         $size = openssl_cipher_iv_length(static::ALGORITHM);
+        $dataSize = \strlen($data);
+        $nonce = '';
 
-        return random_bytes($size);
+        for ($i = 1; $i <= $size; ++$i) {
+            $nonce .= $data[($i % $dataSize) - 1];
+        }
+
+        return $nonce;
     }
 }

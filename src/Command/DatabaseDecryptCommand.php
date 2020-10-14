@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\UnitOfWork;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
 use Drjele\DoctrineEncrypt\Encryptor\FakeEncryptor;
+use Drjele\DoctrineEncrypt\Exception\StopException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -88,8 +89,6 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
             $resetedEncryptors = $this->resetEncryptors($entityMetadataDto->getEncryptionFields());
 
             foreach ($entities as $entity) {
-                usleep(200000);
-
                 ++$i;
 
                 $unitOfWork->setOriginalEntityData($entity, $originalEntityData);

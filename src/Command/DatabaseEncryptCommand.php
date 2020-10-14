@@ -11,6 +11,7 @@ namespace Drjele\DoctrineEncrypt\Command;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\UnitOfWork;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
+use Drjele\DoctrineEncrypt\Exception\StopException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

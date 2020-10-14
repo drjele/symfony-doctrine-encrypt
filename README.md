@@ -11,7 +11,8 @@ I am trying to solve a few problems that i found with the current offerings:
 * easy where (_for the moment the parameters have to be encrypted before setting them_).
 
 ## Usage
-The value on the entity will always be unencrypted.
+* the value on the entity will always be unencrypted.
+* the purpose for **AES256FixedEncryptor**, **AES256FixedType** pair is to be able to use **WHERE**, as it will always return the same result for the same input.
 
 ```php
 class Customer
@@ -36,8 +37,8 @@ class Customer
 ```
 
 ## Todo
-* easy where - pass the unencrypted params and have them automatically encrypt.
-* multiple encryptors - have the possibility to encrypt different fields with different algorithms.
+* easy where, pass the unencrypted params and have them automatically encrypt.
+* configure registered encryptors.
 
 ## Inspired by
 * https://github.com/GiveMeAllYourCats/DoctrineEncryptBundle

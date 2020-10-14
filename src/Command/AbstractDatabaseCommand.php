@@ -11,6 +11,7 @@ namespace Drjele\DoctrineEncrypt\Command;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
+use Drjele\DoctrineEncrypt\Exception\StopException;
 use Drjele\DoctrineEncrypt\Service\EncryptorFactory;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
