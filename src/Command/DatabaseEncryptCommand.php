@@ -24,7 +24,7 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $entitiesWithEncryption = $this->getEntitiesWithEncryption();
+            $entitiesWithEncryption = $this->entityService->getEntitiesWithEncryption();
             if (!$entitiesWithEncryption) {
                 $this->warning('No entites found to encrypt!');
 

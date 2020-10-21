@@ -13,52 +13,47 @@ use Doctrine\Persistence\ObjectManager;
 use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
 use Drjele\DoctrineEncrypt\Exception\StopException;
 use Drjele\DoctrineEncrypt\Service\EncryptorFactory;
+use Drjele\DoctrineEncrypt\Service\EntityService;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 abstract class AbstractDatabaseCommand extends AbstractCommand
 {
+    protected const OPTION_MANAGER = 'namager';
+
     protected ManagerRegistry $managerRegistry;
     protected EncryptorFactory $encryptorFactory;
+    protected EntityService $entityService;
 
     public function __construct(
         ManagerRegistry $managerRegistry,
-        EncryptorFactory $encryptorFactory
+        EncryptorFactory $encryptorFactory,
+        EntityService $entityService
     ) {
         $this->managerRegistry = $managerRegistry;
         $this->encryptorFactory = $encryptorFactory;
+        $this->entityService = $entityService;
 
         parent::__construct();
     }
 
-    protected function getManager(): ObjectManager
+    protected function configure()
     {
-        /* @todo add param for manager name */
-        return $this->managerRegistry->getManager();
+        parent::configure();
+
+        $this->addOption(static::OPTION_MANAGER, null, InputOption::VALUE_OPTIONAL, 'the entity manager for witch to run the command');
     }
 
-    /** @return EntityMetadataDto[] */
-    protected function getEntitiesWithEncryption(): array
+    protected function getManagerName(): ?string
     {
-        $encryptedTypes = $this->encryptorFactory->getTypeNames();
-        $entites = [];
+        return $this->input->getOption(static::OPTION_MANAGER);
+    }
 
-        foreach ($this->getManager()->getMetadataFactory()->getAllMetadata() as $classMetadata) {
-            $encryptionFields = [];
+    protected function getManager(): ObjectManager
+    {
+        $managerName = $this->getManagerName();
 
-            foreach ($classMetadata->getFieldNames() as $fieldName) {
-                $type = $classMetadata->getTypeOfField($fieldName);
-
-                if (\in_array($type, $encryptedTypes)) {
-                    $encryptionFields[$fieldName] = $type;
-                }
-            }
-
-            if ($encryptionFields) {
-                $entites[] = new EntityMetadataDto($classMetadata, $encryptionFields);
-            }
-        }
-
-        return $entites;
+        return $this->managerRegistry->getManager($managerName);
     }
 
     protected function getOriginalEntityData(EntityMetadataDto $entityMetadataDto): array

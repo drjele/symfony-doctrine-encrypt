@@ -27,6 +27,7 @@ services:
         arguments:
             $managerRegistry: '@Doctrine\Persistence\ManagerRegistry'
             $encryptorFactory: '@Drjele\DoctrineEncrypt\Service\EncryptorFactory'
+            $entityService: '@Drjele\DoctrineEncrypt\Service\EntityService'
 
     Drjele\DoctrineEncrypt\Command\DatabaseEncryptCommand:
         parent: Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand
@@ -37,3 +38,8 @@ services:
         parent: Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand
         tags:
             - { name: 'console.command' }
+
+    Drjele\DoctrineEncrypt\Service\EntityService:
+        arguments:
+            $managerRegistry: '@Doctrine\Persistence\ManagerRegistry'
+            $encryptorFactory: '@Drjele\DoctrineEncrypt\Service\EncryptorFactory'
