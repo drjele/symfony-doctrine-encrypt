@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Drjele\DoctrineEncrypt\DependencyInjection;
 
-use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -28,10 +27,6 @@ class DrjeleDoctrineEncryptExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('drjele_doctrine_encrypt.salt', $config['salt']);
-
-        $alias = $container->setAlias(EncryptorInterface::class, $config['encryptor_class']);
-        /* this is done to be able to get it from the container */
-        $alias->setPublic(true)
-            ->setPrivate(false);
+        $container->setParameter('drjele_doctrine_encrypt.enabled_types', $config['enabled_types']);
     }
 }

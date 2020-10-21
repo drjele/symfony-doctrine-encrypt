@@ -41,7 +41,7 @@ class EntityService
             );
         }
 
-        return $this->encryptorFactory->getByType($encryptionFields[$field]);
+        return $this->encryptorFactory->getEncryptorByType($encryptionFields[$field]);
     }
 
     /** @return EntityMetadataDto[] */

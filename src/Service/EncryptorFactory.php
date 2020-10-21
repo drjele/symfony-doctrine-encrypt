@@ -45,33 +45,23 @@ class EncryptorFactory
         }
     }
 
+    /**
+     * @return EncryptorInterface[]
+     *
+     * @internal
+     */
+    public function getEncryptors(): ?array
+    {
+        return $this->encryptors;
+    }
+
+    /** @internal */
     public function getTypeNames(): ?array
     {
         return $this->typeNames;
     }
 
-    public function registerTypes(): void
-    {
-        foreach ($this->encryptors as $encryptor) {
-            $typeClass = $encryptor->getTypeClass();
-
-            if (!$typeClass) {
-                continue;
-            }
-
-            $typeName = $encryptor->getTypeName();
-
-            if (!Type::hasType($typeName)) {
-                Type::addType($typeName, $typeClass);
-            }
-
-            /** @var AbstractType $encryptedType */
-            $encryptedType = Type::getType($typeName);
-            $encryptedType->setEncryptor($encryptor);
-        }
-    }
-
-    public function get(string $encryptorClass): EncryptorInterface
+    public function getEncryptor(string $encryptorClass): EncryptorInterface
     {
         if (!isset($this->encryptors[$encryptorClass])) {
             throw new EncryptorNotFoundException(sprintf('No encyptor found for "%s"', $encryptorClass));
@@ -80,7 +70,7 @@ class EncryptorFactory
         return $this->encryptors[$encryptorClass];
     }
 
-    public function getByType(string $typeName): EncryptorInterface
+    public function getEncryptorByType(string $typeName): EncryptorInterface
     {
         foreach ($this->encryptors as $encryptor) {
             if ($encryptor->getTypeName() == $typeName) {
@@ -94,7 +84,7 @@ class EncryptorFactory
     public function getType(string $typeName): AbstractType
     {
         if (!\in_array($typeName, $this->typeNames)) {
-            throw new TypeNotFoundException(sprintf('No type found for type "%s"', $typeName));
+            throw new TypeNotFoundException(sprintf('No type found for "%s"', $typeName));
         }
 
         return Type::getType($typeName);

@@ -121,7 +121,7 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
             $resetedEncryptors[$typeName] = $type->getEncryptor();
 
             $type->setEncryptor(
-                $this->encryptorFactory->get(FakeEncryptor::class)
+                $this->encryptorFactory->getEncryptor(FakeEncryptor::class)
             );
         }
 
