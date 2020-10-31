@@ -14,6 +14,7 @@ use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
 use Drjele\DoctrineEncrypt\Exception\StopException;
 use Drjele\DoctrineEncrypt\Service\EncryptorFactory;
 use Drjele\DoctrineEncrypt\Service\EntityService;
+use Drjele\SymfonyCommand\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
@@ -102,8 +103,6 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
         }
         unset($questionPart);
 
-        $questionText = '<question>' . implode(PHP_EOL, $questionParts) . '</question>: ';
-
-        return $questionText;
+        return '<question>' . implode(PHP_EOL, $questionParts) . '</question>: ';
     }
 }
