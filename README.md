@@ -1,7 +1,10 @@
 # Doctrine Encrypt Type
 
 The bundle will automatically register **\Drjele\DoctrineEncrypt\Type\EncryptedType** as a Doctrine type.
+
 It can be used for any string field.
+
+Any suggestions are welcomed.
 
 ## Purpose
 Encrypt and decrypt data using Doctrine.
