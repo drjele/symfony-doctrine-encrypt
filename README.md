@@ -1,10 +1,10 @@
 # Doctrine Encrypt Type
 
-The bundle will automatically register **\Drjele\DoctrineEncrypt\Type\EncryptedType** as a Doctrine type.
+The bundle will automatically register the types from **\Drjele\DoctrineEncrypt\Type** as a Doctrine types.
 
 It can be used for any string field.
 
-Any suggestions are welcomed.
+**Contributions are welcomed**.
 
 ## Purpose
 Encrypt and decrypt data using Doctrine.
@@ -17,7 +17,7 @@ I am trying to solve a few problems that i found with the current offerings:
 * the value on the entity will always be unencrypted.
 * the purpose for **AES256FixedEncryptor**, **AES256FixedType** pair is to be able to use **WHERE**, as it will always return the same result for the same input.
 * **EntityService::getEncryptor()** will return the encryptor used for the field, if you need to encrypt a value to use it as a **WHERE** parameter.
-* Inside entity:
+* inside entity:
 ```php
 class Customer
 {
@@ -38,6 +38,14 @@ class Customer
         return $this;
     }
 }
+```
+* to encrypt an unencrypted database:
+```shell script 
+php bin/console drjele:doctrine:database:encrypt
+```
+* to decrypt an encrypted database:
+```shell script 
+php bin/console drjele:doctrine:database:decrypt
 ```
 
 ## Todo
