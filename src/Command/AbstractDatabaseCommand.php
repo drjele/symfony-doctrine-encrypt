@@ -93,16 +93,16 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
         /** @todo allow styles */
         $maxLength = 0;
         foreach ($questionParts as $questionPart) {
-            $maxLength = max(\strlen($questionPart), $maxLength);
+            $maxLength = \max(\strlen($questionPart), $maxLength);
         }
 
-        $indent = str_repeat(' ', 4);
+        $indent = \str_repeat(' ', 4);
 
         foreach ($questionParts as &$questionPart) {
-            $questionPart = $indent . str_pad($questionPart, $maxLength, ' ');
+            $questionPart = $indent . \str_pad($questionPart, $maxLength, ' ');
         }
         unset($questionPart);
 
-        return '<question>' . implode(PHP_EOL, $questionParts) . '</question>: ';
+        return '<question>' . \implode(\PHP_EOL, $questionParts) . '</question>: ';
     }
 }

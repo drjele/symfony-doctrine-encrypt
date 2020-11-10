@@ -21,7 +21,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
 
     public function __construct(string $salt)
     {
-        if (!\is_string($salt) || mb_strlen($salt) < static::MINIMUM_KEY_LENGTH) {
+        if (!\is_string($salt) || \mb_strlen($salt) < static::MINIMUM_KEY_LENGTH) {
             throw new Exception('Invalid encryption salt');
         }
 
@@ -36,37 +36,37 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
     public function encrypt(string $data): string
     {
         $nonce = $this->generateNonce($data);
-        $plaintext = serialize($data);
+        $plaintext = \serialize($data);
 
-        $ciphertext = openssl_encrypt(
+        $ciphertext = \openssl_encrypt(
             $plaintext,
             static::ALGORITHM,
             $this->salt,
-            OPENSSL_RAW_DATA,
+            \OPENSSL_RAW_DATA,
             $nonce
         );
 
-        $mac = hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
+        $mac = \hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
-        return implode(
+        return \implode(
             static::GLUE,
             [
                 static::ENCRYPTION_MARKER,
-                base64_encode($ciphertext),
-                base64_encode($mac),
-                base64_encode($nonce),
+                \base64_encode($ciphertext),
+                \base64_encode($mac),
+                \base64_encode($nonce),
             ]
         );
     }
 
     public function decrypt(string $data): string
     {
-        if (0 !== mb_strpos($data, static::ENCRYPTION_MARKER . static::GLUE, 0)) {
+        if (0 !== \mb_strpos($data, static::ENCRYPTION_MARKER . static::GLUE, 0)) {
             /* @todo have an option in the bundle config to return or throw exception */
             return $data;
         }
 
-        $parts = explode(static::GLUE, $data);
+        $parts = \explode(static::GLUE, $data);
 
         if (4 !== \count($parts)) {
             throw new Exception('Could not validate ciphertext');
@@ -74,29 +74,29 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
 
         [$_, $ciphertext, $mac, $nonce] = $parts;
 
-        if (false === ($ciphertext = base64_decode($ciphertext))) {
+        if (false === ($ciphertext = \base64_decode($ciphertext))) {
             throw new Exception('Could not validate ciphertext');
         }
 
-        if (false === ($mac = base64_decode($mac))) {
+        if (false === ($mac = \base64_decode($mac))) {
             throw new Exception('Could not validate ciphertext');
         }
 
-        if (false === ($nonce = base64_decode($nonce))) {
+        if (false === ($nonce = \base64_decode($nonce))) {
             throw new Exception('Could not validate ciphertext');
         }
 
-        $expected = hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
+        $expected = \hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
-        if (!hash_equals($expected, $mac)) {
+        if (!\hash_equals($expected, $mac)) {
             throw new Exception('Invalid mac');
         }
 
-        $plaintext = openssl_decrypt(
+        $plaintext = \openssl_decrypt(
             $ciphertext,
             static::ALGORITHM,
             $this->salt,
-            OPENSSL_RAW_DATA,
+            \OPENSSL_RAW_DATA,
             $nonce
         );
 
@@ -104,12 +104,12 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
             throw new Exception('Could not decrypt ciphertext');
         }
 
-        return unserialize($plaintext);
+        return \unserialize($plaintext);
     }
 
     protected function generateNonce(string $data): string
     {
-        $size = openssl_cipher_iv_length(static::ALGORITHM);
+        $size = \openssl_cipher_iv_length(static::ALGORITHM);
         $dataSize = \strlen($data);
         $nonce = '';
 

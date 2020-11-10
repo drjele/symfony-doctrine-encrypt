@@ -37,7 +37,7 @@ class EntityService
 
         if (!isset($encryptionFields[$field])) {
             throw new FieldNotEncryptedException(
-                sprintf('Field %s::%s has no encryption defined', $class, $field)
+                \sprintf('Field %s::%s has no encryption defined', $class, $field)
             );
         }
 

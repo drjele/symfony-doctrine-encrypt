@@ -58,9 +58,9 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
 
         $this->io->section('[DECRYPT]' . $className);
 
-        $fields = array_merge(
+        $fields = \array_merge(
             $entityMetadataDto->getClassMetadata()->getIdentifier(),
-            array_keys($entityMetadataDto->getEncryptionFields())
+            \array_keys($entityMetadataDto->getEncryptionFields())
         );
 
         $em = $this->getManager();
@@ -79,7 +79,7 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
 
         do {
             $entities = $repository->createQueryBuilder('e')
-                ->select('PARTIAL e.{' . implode(', ', $fields) . '}')
+                ->select('PARTIAL e.{' . \implode(', ', $fields) . '}')
                 ->setMaxResults(50)
                 ->setFirstResult($i)
                 ->getQuery()->getResult();
@@ -103,7 +103,7 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
             $this->restoreEncryptors($resetedEncryptors);
 
             $em->clear();
-            gc_collect_cycles();
+            \gc_collect_cycles();
         } while ($entities);
 
         $progressBar->finish();

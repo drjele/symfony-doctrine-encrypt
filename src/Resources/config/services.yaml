@@ -1,9 +1,4 @@
 services:
-    _instanceof:
-        Drjele\DoctrineEncrypt\Contract\EncryptorInterface:
-            tags:
-                - { name: 'drjele.doctrine.encryptor' }
-
     Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor:
         abstract: true
         arguments:
@@ -11,11 +6,17 @@ services:
 
     Drjele\DoctrineEncrypt\Encryptor\AES256Encryptor:
         parent: Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor
+        tags:
+            - { name: 'drjele.doctrine.encryptor' }
 
-    Drjele\DoctrineEncrypt\Encryptor\FakeEncryptor: ~
+    Drjele\DoctrineEncrypt\Encryptor\FakeEncryptor:
+        tags:
+            - { name: 'drjele.doctrine.encryptor' }
 
     Drjele\DoctrineEncrypt\Encryptor\AES256FixedEncryptor:
         parent: Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor
+        tags:
+            - { name: 'drjele.doctrine.encryptor' }
 
     Drjele\DoctrineEncrypt\Service\EncryptorFactory:
         public: true

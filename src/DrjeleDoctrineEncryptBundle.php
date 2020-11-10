@@ -31,9 +31,9 @@ class DrjeleDoctrineEncryptBundle extends Bundle
         $encryptorFactory = $this->container->get(EncryptorFactory::class);
 
         $enabledTypes = $this->container->getParameter('drjele_doctrine_encrypt.enabled_types');
-        $diff = array_diff($enabledTypes, $encryptorFactory->getTypeNames());
+        $diff = \array_diff($enabledTypes, $encryptorFactory->getTypeNames());
         if ($diff) {
-            throw new TypeNotFoundException(sprintf('No type found for "%s"', implode(', ', $diff)));
+            throw new TypeNotFoundException(\sprintf('No type found for "%s"', \implode(', ', $diff)));
         }
 
         foreach ($encryptorFactory->getEncryptors() as $encryptor) {
