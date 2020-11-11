@@ -109,8 +109,16 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
 
     protected function generateNonce(string $data): string
     {
-        $size = \openssl_cipher_iv_length(static::ALGORITHM);
         $dataSize = \strlen($data);
+
+        if (0 == $dataSize) {
+            $dataSize = 10;
+
+            $data = \str_repeat('0', $dataSize);
+        }
+
+        $size = \openssl_cipher_iv_length(static::ALGORITHM);
+
         $nonce = '';
 
         for ($i = 1; $i <= $size; ++$i) {
