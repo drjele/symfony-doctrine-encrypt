@@ -8,7 +8,7 @@
         "encrypt",
         "decrypt"
     ],
-    "homepage": "https://gitlab.com/drjele-utility/doctrine-encrypt",
+    "homepage": "https://gitlab.com/drjele-symfony/doctrine-encrypt",
     "license": "MIT",
     "authors": [
         {

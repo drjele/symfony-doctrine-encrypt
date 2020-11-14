@@ -1,8 +1,10 @@
 # Doctrine Encrypt Type
 
-The bundle will automatically register the types from **\Drjele\DoctrineEncrypt\Type** as a Doctrine types.
+The bundle will automatically register the types from **\Drjele\DoctrineEncrypt\Type** as Doctrine types.
 
 It can be used for any string field.
+
+**You may fork and modify it as you wish**.
 
 **Contributions are welcomed**.
 
@@ -10,14 +12,14 @@ It can be used for any string field.
 Encrypt and decrypt data using Doctrine.
 
 I am trying to solve a few problems that i found with the current offerings:
-* have encrypt and decrypt available if using entities or just selecting fields.
-* easy where (_for the moment the parameters have to be encrypted before setting them_).
+* Have encrypt and decrypt available if using entities or just selecting fields.
+* Easy where (_for the moment the parameters have to be encrypted before setting them_).
 
 ## Usage
-* the value on the entity will always be unencrypted.
-* the purpose for **AES256FixedEncryptor**, **AES256FixedType** pair is to be able to use **WHERE**, as it will always return the same result for the same input.
+* The value on the entity will always be unencrypted.
+* The purpose for **AES256FixedEncryptor**, **AES256FixedType** pair is to be able to use **WHERE**, as it will always return the same result for the same input.
 * **EntityService::getEncryptor()** will return the encryptor used for the field, if you need to encrypt a value to use it as a **WHERE** parameter.
-* inside entity:
+* Inside entity:
 ```php
 class Customer
 {
@@ -39,18 +41,18 @@ class Customer
     }
 }
 ```
-* to encrypt an unencrypted database:
+* To encrypt an unencrypted database:
 ```shell script 
 php bin/console drjele:doctrine:database:encrypt
 ```
-* to decrypt an encrypted database:
+* To decrypt an encrypted database:
 ```shell script 
 php bin/console drjele:doctrine:database:decrypt
 ```
 
 ## Todo
-* easy where, pass the unencrypted params and have them automatically encrypt.
-* configure registered encryptors.
+* Easy where, pass the unencrypted params and have them automatically encrypt.
+* Configure registered encryptors.
 
 ## Inspired by
 * https://github.com/GiveMeAllYourCats/DoctrineEncryptBundle
