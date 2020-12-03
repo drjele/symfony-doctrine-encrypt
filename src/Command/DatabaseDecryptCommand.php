@@ -20,7 +20,9 @@ use Throwable;
 
 class DatabaseDecryptCommand extends AbstractDatabaseCommand
 {
-    protected static $defaultName = 'drjele:doctrine:database:decrypt';
+    public const NAME = 'drjele:doctrine:database:decrypt';
+
+    protected static $defaultName = self::NAME;
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {

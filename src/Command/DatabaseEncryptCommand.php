@@ -19,7 +19,9 @@ use Throwable;
 
 class DatabaseEncryptCommand extends AbstractDatabaseCommand
 {
-    protected static $defaultName = 'drjele:doctrine:database:encrypt';
+    public const NAME = 'drjele:doctrine:database:encrypt';
+
+    protected static $defaultName = self::NAME;
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {

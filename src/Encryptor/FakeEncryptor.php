@@ -10,7 +10,12 @@ namespace Drjele\DoctrineEncrypt\Encryptor;
 
 use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
 
-class FakeEncryptor implements EncryptorInterface
+/**
+ * used by the encrypt and decrypt command.
+ *
+ * @internal
+ */
+final class FakeEncryptor implements EncryptorInterface
 {
     public function getTypeClass(): ?string
     {
