@@ -118,6 +118,10 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
         $resetedEncryptors = [];
 
         foreach ($encryptionFields as $field => $typeName) {
+            if (isset($resetedEncryptors[$typeName])) {
+                continue;
+            }
+
             $type = $this->encryptorFactory->getType($typeName);
 
             $resetedEncryptors[$typeName] = $type->getEncryptor();

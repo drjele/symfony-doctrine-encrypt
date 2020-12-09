@@ -79,11 +79,11 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
         }
 
         if (false === ($mac = \base64_decode($mac))) {
-            throw new Exception('Could not validate ciphertext');
+            throw new Exception('Could not validate mac');
         }
 
         if (false === ($nonce = \base64_decode($nonce))) {
-            throw new Exception('Could not validate ciphertext');
+            throw new Exception('Could not validate nonce');
         }
 
         $expected = \hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
@@ -107,7 +107,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
         return \unserialize($plaintext);
     }
 
-    protected function generateNonce(string $data): string
+    private function generateNonce(string $data): string
     {
         $dataSize = \strlen($data);
 

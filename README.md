@@ -53,6 +53,7 @@ php bin/console drjele:doctrine:database:decrypt
 ## Todo
 * Easy where, pass the unencrypted params and have them automatically encrypt.
 * Configure registered encryptors.
+* Have a **isEncrypted($entity, $fieldName): bool** method.
 
 ## Inspired by
 * https://github.com/GiveMeAllYourCats/DoctrineEncryptBundle
