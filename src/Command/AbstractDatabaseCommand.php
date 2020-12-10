@@ -70,6 +70,10 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
 
     protected function askForConfirmation(array $entitiesWithEncryption): void
     {
+        if (false == $this->input->isInteractive()) {
+            return;
+        }
+
         $confirmationQuestion = new ConfirmationQuestion(
             $this->getQuestionText(
                 [
