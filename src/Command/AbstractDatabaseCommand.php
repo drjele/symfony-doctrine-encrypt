@@ -20,7 +20,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 abstract class AbstractDatabaseCommand extends AbstractCommand
 {
-    protected const OPTION_MANAGER = 'namager';
+    protected const OPTION_MANAGER = 'manager';
 
     protected ManagerRegistry $managerRegistry;
     protected EncryptorFactory $encryptorFactory;
