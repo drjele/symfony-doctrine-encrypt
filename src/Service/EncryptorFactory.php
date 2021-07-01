@@ -32,7 +32,7 @@ class EncryptorFactory
         foreach ($encryptors as $encryptor) {
             $typeName = $encryptor->getTypeName();
             if ($typeName) {
-                if (\in_array($typeName, $this->typeNames)) {
+                if (\in_array($typeName, $this->typeNames, true)) {
                     throw new DuplicateEncryptorException(
                         \sprintf('Multiple encryptors defined for type "%s"', $typeName)
                     );
@@ -73,7 +73,7 @@ class EncryptorFactory
     public function getEncryptorByType(string $typeName): EncryptorInterface
     {
         foreach ($this->encryptors as $encryptor) {
-            if ($encryptor->getTypeName() == $typeName) {
+            if ($encryptor->getTypeName() === $typeName) {
                 return $encryptor;
             }
         }
@@ -83,7 +83,7 @@ class EncryptorFactory
 
     public function getType(string $typeName): AbstractType
     {
-        if (!\in_array($typeName, $this->typeNames)) {
+        if (!\in_array($typeName, $this->typeNames, true)) {
             throw new TypeNotFoundException(\sprintf('No type found for "%s"', $typeName));
         }
 

@@ -74,15 +74,15 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
 
         [$_, $ciphertext, $mac, $nonce] = $parts;
 
-        if (false === ($ciphertext = \base64_decode($ciphertext))) {
+        if (false === ($ciphertext = \base64_decode($ciphertext, true))) {
             throw new Exception('Could not validate ciphertext');
         }
 
-        if (false === ($mac = \base64_decode($mac))) {
+        if (false === ($mac = \base64_decode($mac, true))) {
             throw new Exception('Could not validate mac');
         }
 
-        if (false === ($nonce = \base64_decode($nonce))) {
+        if (false === ($nonce = \base64_decode($nonce, true))) {
             throw new Exception('Could not validate nonce');
         }
 
@@ -111,7 +111,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
     {
         $dataSize = \strlen($data);
 
-        if (0 == $dataSize) {
+        if (0 === $dataSize) {
             $dataSize = 10;
 
             $data = \str_repeat('0', $dataSize);

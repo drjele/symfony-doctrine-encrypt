@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class DrjeleDoctrineEncryptBundle extends Bundle
 {
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 
@@ -45,7 +45,7 @@ class DrjeleDoctrineEncryptBundle extends Bundle
 
             $typeName = $encryptor->getTypeName();
 
-            if ($enabledTypes && !\in_array($typeName, $enabledTypes)) {
+            if ($enabledTypes && !\in_array($typeName, $enabledTypes, true)) {
                 continue;
             }
 

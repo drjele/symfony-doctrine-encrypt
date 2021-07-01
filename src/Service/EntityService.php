@@ -97,7 +97,7 @@ class EntityService
         foreach ($classMetadata->getFieldNames() as $fieldName) {
             $type = $classMetadata->getTypeOfField($fieldName);
 
-            if (\in_array($type, $encryptedTypes)) {
+            if (\in_array($type, $encryptedTypes, true)) {
                 $encryptionFields[$fieldName] = $type;
             }
         }

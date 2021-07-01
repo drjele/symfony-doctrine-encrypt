@@ -45,19 +45,19 @@ abstract class AbstractType extends StringType
     {
         $this->validate();
 
-        return (null === $value) ? null : $this->encryptor->encrypt((string)$value);
+        return (null === $value) ? null : $this->encryptor->encrypt((string) $value);
     }
 
     final public function convertToPHPValue($value, AbstractPlatform $platform): ?string
     {
         $this->validate();
 
-        return (null === $value) ? null : $this->encryptor->decrypt((string)$value);
+        return (null === $value) ? null : $this->encryptor->decrypt((string) $value);
     }
 
     private function validate(): void
     {
-        if (false == isset($this->encryptor)) {
+        if (false === isset($this->encryptor)) {
             throw new Exception('The encryptor was not set');
         }
     }

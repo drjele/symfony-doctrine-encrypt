@@ -76,7 +76,7 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
             ->select('COUNT(e)')
             ->getQuery()->getSingleScalarResult();
 
-        $progressBar = new ProgressBar($this->output, (int)$total);
+        $progressBar = new ProgressBar($this->output, (int) $total);
         $i = 0;
 
         do {
