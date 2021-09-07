@@ -6,12 +6,12 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Command;
+namespace Drjele\Doctrine\Encrypt\Command;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\UnitOfWork;
-use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
-use Drjele\DoctrineEncrypt\Exception\StopException;
+use Drjele\Doctrine\Encrypt\Dto\EntityMetadataDto;
+use Drjele\Doctrine\Encrypt\Exception\StopException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

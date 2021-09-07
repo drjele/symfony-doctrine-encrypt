@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Type;
+namespace Drjele\Doctrine\Encrypt\Type;
 
 class AES256FixedType extends AbstractType
 {

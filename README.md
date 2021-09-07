@@ -1,6 +1,6 @@
 # Doctrine Encrypt Type
 
-The bundle will automatically register the types from **\Drjele\DoctrineEncrypt\Type** as Doctrine types.
+The bundle will automatically register the types from **\Drjele\Doctrine\Encrypt\Type** as Doctrine types.
 
 It can be used for any string field.
 

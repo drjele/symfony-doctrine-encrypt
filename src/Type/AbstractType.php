@@ -6,12 +6,12 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Type;
+namespace Drjele\Doctrine\Encrypt\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
-use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
-use Drjele\DoctrineEncrypt\Exception\Exception;
+use Drjele\Doctrine\Encrypt\Contract\EncryptorInterface;
+use Drjele\Doctrine\Encrypt\Exception\Exception;
 
 abstract class AbstractType extends StringType
 {

@@ -6,12 +6,12 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt;
+namespace Drjele\Doctrine\Encrypt;
 
 use Doctrine\DBAL\Types\Type;
-use Drjele\DoctrineEncrypt\Exception\TypeNotFoundException;
-use Drjele\DoctrineEncrypt\Service\EncryptorFactory;
-use Drjele\DoctrineEncrypt\Type\AbstractType;
+use Drjele\Doctrine\Encrypt\Exception\TypeNotFoundException;
+use Drjele\Doctrine\Encrypt\Service\EncryptorFactory;
+use Drjele\Doctrine\Encrypt\Type\AbstractType;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class DrjeleDoctrineEncryptBundle extends Bundle

@@ -6,15 +6,15 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Command;
+namespace Drjele\Doctrine\Encrypt\Command;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
-use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
-use Drjele\DoctrineEncrypt\Exception\StopException;
-use Drjele\DoctrineEncrypt\Service\EncryptorFactory;
-use Drjele\DoctrineEncrypt\Service\EntityService;
-use Drjele\SymfonyCommand\Command\AbstractCommand;
+use Drjele\Doctrine\Encrypt\Dto\EntityMetadataDto;
+use Drjele\Doctrine\Encrypt\Exception\StopException;
+use Drjele\Doctrine\Encrypt\Service\EncryptorFactory;
+use Drjele\Doctrine\Encrypt\Service\EntityService;
+use Drjele\Symfony\Command\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 

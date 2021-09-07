@@ -6,9 +6,9 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Encryptor;
+namespace Drjele\Doctrine\Encrypt\Encryptor;
 
-use Drjele\DoctrineEncrypt\Type\AbstractType;
+use Drjele\Doctrine\Encrypt\Type\AbstractType;
 
 abstract class AbstractEncryptor
 {

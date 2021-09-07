@@ -6,14 +6,14 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Service;
+namespace Drjele\Doctrine\Encrypt\Service;
 
 use Doctrine\DBAL\Types\Type;
-use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
-use Drjele\DoctrineEncrypt\Exception\DuplicateEncryptorException;
-use Drjele\DoctrineEncrypt\Exception\EncryptorNotFoundException;
-use Drjele\DoctrineEncrypt\Exception\TypeNotFoundException;
-use Drjele\DoctrineEncrypt\Type\AbstractType;
+use Drjele\Doctrine\Encrypt\Contract\EncryptorInterface;
+use Drjele\Doctrine\Encrypt\Exception\DuplicateEncryptorException;
+use Drjele\Doctrine\Encrypt\Exception\EncryptorNotFoundException;
+use Drjele\Doctrine\Encrypt\Exception\TypeNotFoundException;
+use Drjele\Doctrine\Encrypt\Type\AbstractType;
 
 class EncryptorFactory
 {

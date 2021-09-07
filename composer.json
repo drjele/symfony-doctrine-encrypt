@@ -21,17 +21,22 @@
         "ext-openssl": "*",
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/orm": "^2.9",
-        "drjele/symfony-command": "^1.0",
+        "drjele/symfony-command": "^2.0",
         "symfony/config": "^4.0|^5.0"
     },
     "require-dev": {
-        "drjele/symfony-phpunit": "^1.0",
+        "drjele/symfony-phpunit": "^2.0",
         "friendsofphp/php-cs-fixer": "^3.0",
         "squizlabs/php_codesniffer": "^3.6"
     },
     "autoload": {
         "psr-4": {
-            "Drjele\\DoctrineEncrypt\\": "src/"
+            "Drjele\\Doctrine\\Encrypt\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Drjele\\Doctrine\\Encrypt\\Test\\": "tests/"
         }
     },
     "scripts": {

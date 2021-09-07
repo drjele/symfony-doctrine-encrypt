@@ -1,46 +1,46 @@
 services:
-    Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor:
+    Drjele\Doctrine\Encrypt\Encryptor\AbstractEncryptor:
         abstract: true
         arguments:
             $salt: '%drjele_doctrine_encrypt.salt%'
 
-    Drjele\DoctrineEncrypt\Encryptor\AES256Encryptor:
-        parent: Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor
+    Drjele\Doctrine\Encrypt\Encryptor\AES256Encryptor:
+        parent: Drjele\Doctrine\Encrypt\Encryptor\AbstractEncryptor
         tags:
             - { name: 'drjele.doctrine.encryptor' }
 
-    Drjele\DoctrineEncrypt\Encryptor\FakeEncryptor:
+    Drjele\Doctrine\Encrypt\Encryptor\FakeEncryptor:
         tags:
             - { name: 'drjele.doctrine.encryptor' }
 
-    Drjele\DoctrineEncrypt\Encryptor\AES256FixedEncryptor:
-        parent: Drjele\DoctrineEncrypt\Encryptor\AbstractEncryptor
+    Drjele\Doctrine\Encrypt\Encryptor\AES256FixedEncryptor:
+        parent: Drjele\Doctrine\Encrypt\Encryptor\AbstractEncryptor
         tags:
             - { name: 'drjele.doctrine.encryptor' }
 
-    Drjele\DoctrineEncrypt\Service\EncryptorFactory:
+    Drjele\Doctrine\Encrypt\Service\EncryptorFactory:
         public: true
         arguments:
             $encryptors: !tagged_iterator drjele.doctrine.encryptor
 
-    Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand:
+    Drjele\Doctrine\Encrypt\Command\AbstractDatabaseCommand:
         abstract: true
         arguments:
             $managerRegistry: '@Doctrine\Persistence\ManagerRegistry'
-            $encryptorFactory: '@Drjele\DoctrineEncrypt\Service\EncryptorFactory'
-            $entityService: '@Drjele\DoctrineEncrypt\Service\EntityService'
+            $encryptorFactory: '@Drjele\Doctrine\Encrypt\Service\EncryptorFactory'
+            $entityService: '@Drjele\Doctrine\Encrypt\Service\EntityService'
 
-    Drjele\DoctrineEncrypt\Command\DatabaseEncryptCommand:
-        parent: Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand
+    Drjele\Doctrine\Encrypt\Command\DatabaseEncryptCommand:
+        parent: Drjele\Doctrine\Encrypt\Command\AbstractDatabaseCommand
         tags:
             - { name: 'console.command' }
 
-    Drjele\DoctrineEncrypt\Command\DatabaseDecryptCommand:
-        parent: Drjele\DoctrineEncrypt\Command\AbstractDatabaseCommand
+    Drjele\Doctrine\Encrypt\Command\DatabaseDecryptCommand:
+        parent: Drjele\Doctrine\Encrypt\Command\AbstractDatabaseCommand
         tags:
             - { name: 'console.command' }
 
-    Drjele\DoctrineEncrypt\Service\EntityService:
+    Drjele\Doctrine\Encrypt\Service\EntityService:
         arguments:
             $managerRegistry: '@Doctrine\Persistence\ManagerRegistry'
-            $encryptorFactory: '@Drjele\DoctrineEncrypt\Service\EncryptorFactory'
+            $encryptorFactory: '@Drjele\Doctrine\Encrypt\Service\EncryptorFactory'

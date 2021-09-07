@@ -6,13 +6,13 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Service;
+namespace Drjele\Doctrine\Encrypt\Service;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
-use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
-use Drjele\DoctrineEncrypt\Dto\EntityMetadataDto;
-use Drjele\DoctrineEncrypt\Exception\FieldNotEncryptedException;
+use Drjele\Doctrine\Encrypt\Contract\EncryptorInterface;
+use Drjele\Doctrine\Encrypt\Dto\EntityMetadataDto;
+use Drjele\Doctrine\Encrypt\Exception\FieldNotEncryptedException;
 
 class EntityService
 {

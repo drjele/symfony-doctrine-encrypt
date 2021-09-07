@@ -6,11 +6,11 @@ declare(strict_types=1);
  * Copyright (c) Adrian Jeledintan
  */
 
-namespace Drjele\DoctrineEncrypt\Encryptor;
+namespace Drjele\Doctrine\Encrypt\Encryptor;
 
-use Drjele\DoctrineEncrypt\Contract\EncryptorInterface;
-use Drjele\DoctrineEncrypt\Exception\Exception;
-use Drjele\DoctrineEncrypt\Type\AES256Type;
+use Drjele\Doctrine\Encrypt\Contract\EncryptorInterface;
+use Drjele\Doctrine\Encrypt\Exception\Exception;
+use Drjele\Doctrine\Encrypt\Type\AES256Type;
 
 class AES256Encryptor extends AbstractEncryptor implements EncryptorInterface
 {
