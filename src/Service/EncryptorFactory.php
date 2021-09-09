@@ -34,7 +34,7 @@ class EncryptorFactory
             if ($typeName) {
                 if (\in_array($typeName, $this->typeNames, true)) {
                     throw new DuplicateEncryptorException(
-                        \sprintf('Multiple encryptors defined for type "%s"', $typeName)
+                        \sprintf('multiple encryptors defined for type `%s`', $typeName)
                     );
                 }
 
@@ -64,7 +64,7 @@ class EncryptorFactory
     public function getEncryptor(string $encryptorClass): EncryptorInterface
     {
         if (!isset($this->encryptors[$encryptorClass])) {
-            throw new EncryptorNotFoundException(\sprintf('No encyptor found for "%s"', $encryptorClass));
+            throw new EncryptorNotFoundException(\sprintf('no encyptor found for `%s`', $encryptorClass));
         }
 
         return $this->encryptors[$encryptorClass];
@@ -78,13 +78,13 @@ class EncryptorFactory
             }
         }
 
-        throw new EncryptorNotFoundException(\sprintf('No encyptor found for type "%s"', $typeName));
+        throw new EncryptorNotFoundException(\sprintf('no encyptor found for type `%s`', $typeName));
     }
 
     public function getType(string $typeName): AbstractType
     {
         if (!\in_array($typeName, $this->typeNames, true)) {
-            throw new TypeNotFoundException(\sprintf('No type found for "%s"', $typeName));
+            throw new TypeNotFoundException(\sprintf('no type found for `%s`', $typeName));
         }
 
         return Type::getType($typeName);

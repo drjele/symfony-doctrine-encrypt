@@ -58,7 +58,7 @@ abstract class AbstractType extends StringType
     private function validate(): void
     {
         if (false === isset($this->encryptor)) {
-            throw new Exception('The encryptor was not set');
+            throw new Exception('the encryptor was not set');
         }
     }
 }

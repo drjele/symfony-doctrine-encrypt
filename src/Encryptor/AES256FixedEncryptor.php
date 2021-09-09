@@ -22,7 +22,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
     public function __construct(string $salt)
     {
         if (!\is_string($salt) || \mb_strlen($salt) < static::MINIMUM_KEY_LENGTH) {
-            throw new Exception('Invalid encryption salt');
+            throw new Exception('invalid encryption salt');
         }
 
         parent::__construct($salt);
@@ -69,27 +69,27 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
         $parts = \explode(static::GLUE, $data);
 
         if (4 !== \count($parts)) {
-            throw new Exception('Could not validate ciphertext');
+            throw new Exception('could not validate ciphertext');
         }
 
         [$_, $ciphertext, $mac, $nonce] = $parts;
 
         if (false === ($ciphertext = \base64_decode($ciphertext, true))) {
-            throw new Exception('Could not validate ciphertext');
+            throw new Exception('could not validate ciphertext');
         }
 
         if (false === ($mac = \base64_decode($mac, true))) {
-            throw new Exception('Could not validate mac');
+            throw new Exception('could not validate mac');
         }
 
         if (false === ($nonce = \base64_decode($nonce, true))) {
-            throw new Exception('Could not validate nonce');
+            throw new Exception('could not validate nonce');
         }
 
         $expected = \hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
         if (!\hash_equals($expected, $mac)) {
-            throw new Exception('Invalid mac');
+            throw new Exception('invalid mac');
         }
 
         $plaintext = \openssl_decrypt(
@@ -101,7 +101,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
         );
 
         if (false === $plaintext) {
-            throw new Exception('Could not decrypt ciphertext');
+            throw new Exception('could not decrypt ciphertext');
         }
 
         return \unserialize($plaintext);
