@@ -19,14 +19,14 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-openssl": "*",
-        "doctrine/doctrine-bundle": "^2.4",
-        "doctrine/orm": "^2.9",
+        "doctrine/doctrine-bundle": "^2.5",
+        "doctrine/orm": "^2.10",
         "drjele/symfony-command": "^4.0",
         "symfony/config": "^4.0|^5.0|^6.0"
     },
     "require-dev": {
         "drjele/symfony-phpunit": "^3.0",
-        "friendsofphp/php-cs-fixer": "^3.0",
+        "friendsofphp/php-cs-fixer": "^3.3",
         "squizlabs/php_codesniffer": "^3.6"
     },
     "autoload": {
