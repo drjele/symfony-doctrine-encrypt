@@ -77,9 +77,9 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
         $confirmationQuestion = new ConfirmationQuestion(
             $this->getQuestionText(
                 [
-                    \count($entitiesWithEncryption) . ' entities found which are containing properties with encryption types.',
-                    'Wrong settings can mess up your data and it will be unrecoverable.',
-                    'I advise you to make a backup.',
+                    \sprintf('`%s` entities found which are containing properties with encryption types.', \count($entitiesWithEncryption)),
+                    'Wrong settings can make your data unrecoverable.',
+                    'I advise you to make a backup before running this command.',
                     'Continue with this action? (y/yes)',
                 ]
             ),

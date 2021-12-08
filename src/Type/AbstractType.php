@@ -36,7 +36,7 @@ abstract class AbstractType extends StringType
         return $this;
     }
 
-    final public function getName()
+    final public function getName(): string
     {
         return static::getFullName();
     }

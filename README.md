@@ -1,4 +1,4 @@
-# Doctrine encrypt type
+# Doctrine encrypt
 
 The bundle will automatically register the types from **\Drjele\Doctrine\Encrypt\Type** as Doctrine types.
 

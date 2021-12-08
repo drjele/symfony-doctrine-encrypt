@@ -64,7 +64,7 @@ class EncryptorFactory
     public function getEncryptor(string $encryptorClass): EncryptorInterface
     {
         if (!isset($this->encryptors[$encryptorClass])) {
-            throw new EncryptorNotFoundException(\sprintf('no encyptor found for `%s`', $encryptorClass));
+            throw new EncryptorNotFoundException(\sprintf('no encryptor found for `%s`', $encryptorClass));
         }
 
         return $this->encryptors[$encryptorClass];
@@ -78,7 +78,7 @@ class EncryptorFactory
             }
         }
 
-        throw new EncryptorNotFoundException(\sprintf('no encyptor found for type `%s`', $typeName));
+        throw new EncryptorNotFoundException(\sprintf('no encryptor found for type `%s`', $typeName));
     }
 
     public function getType(string $typeName): AbstractType

@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Drjele\Doctrine\Encrypt\Test\Service;
 
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Drjele\Doctrine\Encrypt\Contract\EncryptorInterface;
 use Drjele\Doctrine\Encrypt\Encryptor\AES256Encryptor;
@@ -63,11 +63,11 @@ final class EntityServiceTest extends AbstractTestCase
             ->once()
             ->andReturn(AES256Type::getFullName());
 
-        $managerRegistryMock = $this->get(ManagerRegistry::class);
-        $managerRegistryMock->shouldReceive('getMetadataFactory')
+        $entityManagerMock = $this->get(EntityManagerInterface::class);
+        $entityManagerMock->shouldReceive('getMetadataFactory')
             ->once()
             ->andReturnSelf();
-        $managerRegistryMock->shouldReceive('getMetadataFor')
+        $entityManagerMock->shouldReceive('getMetadataFor')
             ->once()
             ->with($class)
             ->andReturn($classMetadataMock);
@@ -98,11 +98,11 @@ final class EntityServiceTest extends AbstractTestCase
             ->once()
             ->andReturn(AES256Type::getFullName());
 
-        $managerRegistryMock = $this->get(ManagerRegistry::class);
-        $managerRegistryMock->shouldReceive('getMetadataFactory')
+        $entityManagerMock = $this->get(EntityManagerInterface::class);
+        $entityManagerMock->shouldReceive('getMetadataFactory')
             ->once()
             ->andReturnSelf();
-        $managerRegistryMock->shouldReceive('getMetadataFor')
+        $entityManagerMock->shouldReceive('getMetadataFor')
             ->once()
             ->with($class)
             ->andReturn($classMetadataMock);
@@ -138,11 +138,11 @@ final class EntityServiceTest extends AbstractTestCase
             ->once()
             ->andReturn(AES256Type::getFullName());
 
-        $managerRegistryMock = $this->get(ManagerRegistry::class);
-        $managerRegistryMock->shouldReceive('getMetadataFactory')
+        $entityManagerMock = $this->get(EntityManagerInterface::class);
+        $entityManagerMock->shouldReceive('getMetadataFactory')
             ->once()
             ->andReturnSelf();
-        $managerRegistryMock->shouldReceive('getMetadataFor')
+        $entityManagerMock->shouldReceive('getMetadataFor')
             ->once()
             ->with($class)
             ->andReturn($classMetadataMock);
@@ -176,11 +176,11 @@ final class EntityServiceTest extends AbstractTestCase
             ->once()
             ->andReturn('test');
 
-        $managerRegistryMock = $this->get(ManagerRegistry::class);
-        $managerRegistryMock->shouldReceive('getMetadataFactory')
+        $entityManagerMock = $this->get(EntityManagerInterface::class);
+        $entityManagerMock->shouldReceive('getMetadataFactory')
             ->once()
             ->andReturnSelf();
-        $managerRegistryMock->shouldReceive('getAllMetadata')
+        $entityManagerMock->shouldReceive('getAllMetadata')
             ->once()
             ->andReturn([$classMetadataMock]);
 

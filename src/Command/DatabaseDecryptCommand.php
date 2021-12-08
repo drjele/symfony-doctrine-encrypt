@@ -39,14 +39,14 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
             $this->warning('Decrypting all the fields can take up to several minutes depending on the database size.');
 
             foreach ($entitiesWithEncryption as $entityMetadataDto) {
-                $this->encrypt($entityMetadataDto);
+                $this->decrypt($entityMetadataDto);
             }
 
             $this->success('Decryption finished.');
         } catch (StopException $t) {
             /* ignore */
         } catch (Throwable $t) {
-            $this->error($t->__toString());
+            $this->error($t->getMessage(), $t);
 
             return static::FAILURE;
         }
@@ -54,7 +54,7 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
         return static::SUCCESS;
     }
 
-    private function encrypt(EntityMetadataDto $entityMetadataDto): void
+    private function decrypt(EntityMetadataDto $entityMetadataDto): void
     {
         $className = $entityMetadataDto->getClassMetadata()->getName();
 
@@ -117,7 +117,7 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
     {
         $resetedEncryptors = [];
 
-        foreach ($encryptionFields as $field => $typeName) {
+        foreach ($encryptionFields as $typeName) {
             if (isset($resetedEncryptors[$typeName])) {
                 continue;
             }
