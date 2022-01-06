@@ -15,8 +15,10 @@ class EntityMetadataDto
     private ClassMetadata $classMetadata;
     private array $encryptionFields;
 
-    public function __construct(ClassMetadata $classMetadata, array $encryptionFields)
-    {
+    public function __construct(
+        ClassMetadata $classMetadata,
+        array $encryptionFields
+    ) {
         $this->classMetadata = $classMetadata;
         $this->encryptionFields = $encryptionFields;
     }

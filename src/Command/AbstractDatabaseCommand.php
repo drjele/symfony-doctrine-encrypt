@@ -14,7 +14,7 @@ use Drjele\Doctrine\Encrypt\Dto\EntityMetadataDto;
 use Drjele\Doctrine\Encrypt\Exception\StopException;
 use Drjele\Doctrine\Encrypt\Service\EncryptorFactory;
 use Drjele\Doctrine\Encrypt\Service\EntityService;
-use Drjele\Symfony\Command\Command\AbstractCommand;
+use Drjele\Symfony\Console\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
