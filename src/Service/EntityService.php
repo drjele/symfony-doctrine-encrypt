@@ -27,8 +27,11 @@ class EntityService
         $this->encryptorFactory = $encryptorFactory;
     }
 
-    public function getEncryptor(string $class, string $field, string $managerName = null): EncryptorInterface
-    {
+    public function getEncryptor(
+        string $class,
+        string $field,
+        string $managerName = null
+    ): EncryptorInterface {
         $encryptionFields = $this->getEncryptedFields($class, $managerName);
 
         if (!isset($encryptionFields[$field])) {
@@ -40,31 +43,43 @@ class EntityService
         return $this->encryptorFactory->getEncryptorByType($encryptionFields[$field]);
     }
 
-    public function hasEncryptor(string $class, string $field, string $managerName = null): bool
-    {
+    public function hasEncryptor(
+        string $class,
+        string $field,
+        string $managerName = null
+    ): bool {
         $encryptionFields = $this->getEncryptedFields($class, $managerName);
 
         return isset($encryptionFields[$field]);
     }
 
-    public function encrypt(string $data, string $class, string $field, string $managerName = null): string
-    {
+    public function encrypt(
+        string $data,
+        string $class,
+        string $field,
+        string $managerName = null
+    ): string {
         $encryptor = $this->getEncryptor($class, $field, $managerName);
 
         return $encryptor->encrypt($data);
     }
 
-    public function decrypt(string $encryptedData, string $class, string $field, string $managerName = null): string
-    {
+    public function decrypt(
+        string $encryptedData,
+        string $class,
+        string $field,
+        string $managerName = null
+    ): string {
         $encryptor = $this->getEncryptor($class, $field, $managerName);
 
         return $encryptor->decrypt($encryptedData);
     }
 
     /** @return EntityMetadataDto[] */
-    public function getEntitiesWithEncryption(string $manager = null): array
-    {
-        $entites = [];
+    public function getEntitiesWithEncryption(
+        string $manager = null
+    ): array {
+        $entities = [];
 
         $manager = $this->managerRegistry->getManager($manager);
 
@@ -72,15 +87,17 @@ class EntityService
             $encryptionFields = $this->getFieldsForClassMetadata($classMetadata);
 
             if ($encryptionFields) {
-                $entites[$classMetadata->getName()] = new EntityMetadataDto($classMetadata, $encryptionFields);
+                $entities[$classMetadata->getName()] = new EntityMetadataDto($classMetadata, $encryptionFields);
             }
         }
 
-        return $entites;
+        return $entities;
     }
 
-    private function getEncryptedFields(string $class, string $managerName = null): array
-    {
+    private function getEncryptedFields(
+        string $class,
+        string $managerName = null
+    ): array {
         $manager = $this->managerRegistry->getManager($managerName);
 
         $classMetadata = $manager->getMetadataFactory()->getMetadataFor($class);
@@ -88,8 +105,9 @@ class EntityService
         return $this->getFieldsForClassMetadata($classMetadata);
     }
 
-    private function getFieldsForClassMetadata(ClassMetadata $classMetadata): array
-    {
+    private function getFieldsForClassMetadata(
+        ClassMetadata $classMetadata
+    ): array {
         $encryptedTypes = $this->encryptorFactory->getTypeNames();
 
         $encryptionFields = [];

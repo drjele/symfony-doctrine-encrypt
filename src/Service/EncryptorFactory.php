@@ -12,6 +12,7 @@ use Doctrine\DBAL\Types\Type;
 use Drjele\Doctrine\Encrypt\Contract\EncryptorInterface;
 use Drjele\Doctrine\Encrypt\Exception\DuplicateEncryptorException;
 use Drjele\Doctrine\Encrypt\Exception\EncryptorNotFoundException;
+use Drjele\Doctrine\Encrypt\Exception\Exception;
 use Drjele\Doctrine\Encrypt\Exception\TypeNotFoundException;
 use Drjele\Doctrine\Encrypt\Type\AbstractType;
 
@@ -87,6 +88,14 @@ class EncryptorFactory
             throw new TypeNotFoundException(\sprintf('no type found for `%s`', $typeName));
         }
 
-        return Type::getType($typeName);
+        $type = Type::getType($typeName);
+
+        if (($type instanceof AbstractType) === false) {
+            throw new Exception(
+                \sprintf('the encrypted type must extend `%s`', AbstractType::class)
+            );
+        }
+
+        return $type;
     }
 }

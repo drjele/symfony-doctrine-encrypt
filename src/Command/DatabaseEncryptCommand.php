@@ -28,7 +28,7 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
         try {
             $entitiesWithEncryption = $this->entityService->getEntitiesWithEncryption($this->getManagerName());
             if (!$entitiesWithEncryption) {
-                $this->warning('No entites found to encrypt!');
+                $this->warning('No entities found to encrypt!');
 
                 throw new StopException();
             }
