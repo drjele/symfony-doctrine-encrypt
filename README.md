@@ -58,6 +58,22 @@ php bin/console drjele:doctrine:database:encrypt
 php bin/console drjele:doctrine:database:decrypt
 ```
 
+## Dev
+
+```shell
+git clone git@gitlab.com:drjele-symfony/doctrine-encrypt.git
+cd doctrine-encrypt/scripts/docker/
+cp ~/.ssh/id_* ./
+
+echo 'git config --global user.name "<your name>"' >> ./.profile_personal && \
+echo 'git config --global user.email "<your email>"' >> ./.profile_personal
+
+docker-compose build && docker-compose up -d
+docker-compose exec php sh
+
+pfull
+```
+
 ## Todo
 
 * Easy where, pass the unencrypted params and have them automatically encrypt.
