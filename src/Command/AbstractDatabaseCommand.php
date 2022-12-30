@@ -42,12 +42,12 @@ abstract class AbstractDatabaseCommand extends AbstractCommand
     {
         parent::configure();
 
-        $this->addOption(static::OPTION_MANAGER, null, InputOption::VALUE_OPTIONAL, 'the entity manager for witch to run the command');
+        $this->addOption(self::OPTION_MANAGER, null, InputOption::VALUE_OPTIONAL, 'the entity manager for witch to run the command');
     }
 
     protected function getManagerName(): ?string
     {
-        return $this->input->getOption(static::OPTION_MANAGER);
+        return $this->input->getOption(self::OPTION_MANAGER);
     }
 
     protected function getManager(): ObjectManager

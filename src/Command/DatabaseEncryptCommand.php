@@ -23,7 +23,7 @@ class DatabaseEncryptCommand extends AbstractDatabaseCommand
 
     protected static $defaultName = self::NAME;
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $entitiesWithEncryption = $this->entityService->getEntitiesWithEncryption($this->getManagerName());

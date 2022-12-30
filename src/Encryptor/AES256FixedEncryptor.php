@@ -21,7 +21,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
 
     public function __construct(string $salt)
     {
-        if (!\is_string($salt) || \mb_strlen($salt) < static::MINIMUM_KEY_LENGTH) {
+        if (!\is_string($salt) || \mb_strlen($salt) < self::MINIMUM_KEY_LENGTH) {
             throw new Exception('invalid encryption salt');
         }
 
@@ -40,18 +40,18 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
 
         $ciphertext = \openssl_encrypt(
             $plaintext,
-            static::ALGORITHM,
+            self::ALGORITHM,
             $this->salt,
             \OPENSSL_RAW_DATA,
             $nonce
         );
 
-        $mac = \hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
+        $mac = \hash(self::HASH_ALGORITHM, self::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
         return \implode(
-            static::GLUE,
+            self::GLUE,
             [
-                static::ENCRYPTION_MARKER,
+                self::ENCRYPTION_MARKER,
                 \base64_encode($ciphertext),
                 \base64_encode($mac),
                 \base64_encode($nonce),
@@ -61,12 +61,12 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
 
     public function decrypt(string $data): string
     {
-        if (0 !== \mb_strpos($data, static::ENCRYPTION_MARKER . static::GLUE, 0)) {
+        if (0 !== \mb_strpos($data, self::ENCRYPTION_MARKER . self::GLUE, 0)) {
             /* @todo have an option in the bundle config to return or throw exception */
             return $data;
         }
 
-        $parts = \explode(static::GLUE, $data);
+        $parts = \explode(self::GLUE, $data);
 
         if (4 !== \count($parts)) {
             throw new Exception('could not validate ciphertext');
@@ -86,7 +86,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
             throw new Exception('could not validate nonce');
         }
 
-        $expected = \hash(static::HASH_ALGORITHM, static::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
+        $expected = \hash(self::HASH_ALGORITHM, self::ALGORITHM . $ciphertext . $this->salt . $nonce, true);
 
         if (!\hash_equals($expected, $mac)) {
             throw new Exception('invalid mac');
@@ -94,7 +94,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
 
         $plaintext = \openssl_decrypt(
             $ciphertext,
-            static::ALGORITHM,
+            self::ALGORITHM,
             $this->salt,
             \OPENSSL_RAW_DATA,
             $nonce
@@ -117,7 +117,7 @@ class AES256FixedEncryptor extends AbstractEncryptor implements EncryptorInterfa
             $data = \str_repeat('0', $dataSize);
         }
 
-        $size = \openssl_cipher_iv_length(static::ALGORITHM);
+        $size = \openssl_cipher_iv_length(self::ALGORITHM);
 
         $nonce = '';
 
