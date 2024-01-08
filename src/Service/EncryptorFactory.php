@@ -42,7 +42,7 @@ class EncryptorFactory
                 $this->typeNames[] = $typeName;
             }
 
-            $this->encryptors[\get_class($encryptor)] = $encryptor;
+            $this->encryptors[$encryptor::class] = $encryptor;
         }
     }
 
