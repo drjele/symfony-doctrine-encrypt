@@ -8,6 +8,4 @@ declare(strict_types=1);
 
 namespace Drjele\Doctrine\Encrypt\Exception;
 
-class EncryptorNotFoundException extends Exception
-{
-}
+class EncryptorNotFoundException extends Exception {}
