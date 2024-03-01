@@ -22,7 +22,12 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
 {
     public const NAME = 'drjele:doctrine:database:decrypt';
 
-    protected static $defaultName = self::NAME;
+    protected function configure(): void
+    {
+        parent::configure();
+
+        $this->setName(self::NAME);
+    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -76,7 +81,7 @@ class DatabaseDecryptCommand extends AbstractDatabaseCommand
             ->select('COUNT(e)')
             ->getQuery()->getSingleScalarResult();
 
-        $progressBar = new ProgressBar($this->output, (int) $total);
+        $progressBar = new ProgressBar($this->output, (int)$total);
         $i = 0;
 
         do {
