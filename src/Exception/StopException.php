@@ -14,4 +14,6 @@ namespace Drjele\Doctrine\Encrypt\Exception;
  *
  * @internal
  */
-final class StopException extends Exception {}
+final class StopException extends Exception
+{
+}

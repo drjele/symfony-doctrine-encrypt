@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Drjele\Doctrine\Encrypt\Test\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Drjele\Doctrine\Encrypt\Contract\EncryptorInterface;
 use Drjele\Doctrine\Encrypt\Encryptor\AES256Encryptor;
@@ -63,11 +64,13 @@ final class EntityServiceTest extends AbstractTestCase
             ->once()
             ->andReturn(AES256Type::getFullName());
 
+        $classMetadataFactory = Mockery::mock(ClassMetadataFactory::class);
+
         $entityManagerMock = $this->get(EntityManagerInterface::class);
         $entityManagerMock->shouldReceive('getMetadataFactory')
             ->once()
-            ->andReturnSelf();
-        $entityManagerMock->shouldReceive('getMetadataFor')
+            ->andReturn($classMetadataFactory);
+        $classMetadataFactory->shouldReceive('getMetadataFor')
             ->once()
             ->with($class)
             ->andReturn($classMetadataMock);
@@ -98,11 +101,13 @@ final class EntityServiceTest extends AbstractTestCase
             ->once()
             ->andReturn(AES256Type::getFullName());
 
+        $classMetadataFactory = Mockery::mock(ClassMetadataFactory::class);
+
         $entityManagerMock = $this->get(EntityManagerInterface::class);
         $entityManagerMock->shouldReceive('getMetadataFactory')
             ->once()
-            ->andReturnSelf();
-        $entityManagerMock->shouldReceive('getMetadataFor')
+            ->andReturn($classMetadataFactory);
+        $classMetadataFactory->shouldReceive('getMetadataFor')
             ->once()
             ->with($class)
             ->andReturn($classMetadataMock);
@@ -138,11 +143,13 @@ final class EntityServiceTest extends AbstractTestCase
             ->once()
             ->andReturn(AES256Type::getFullName());
 
+        $classMetadataFactory = Mockery::mock(ClassMetadataFactory::class);
+
         $entityManagerMock = $this->get(EntityManagerInterface::class);
         $entityManagerMock->shouldReceive('getMetadataFactory')
             ->once()
-            ->andReturnSelf();
-        $entityManagerMock->shouldReceive('getMetadataFor')
+            ->andReturn($classMetadataFactory);
+        $classMetadataFactory->shouldReceive('getMetadataFor')
             ->once()
             ->with($class)
             ->andReturn($classMetadataMock);
@@ -176,11 +183,13 @@ final class EntityServiceTest extends AbstractTestCase
             ->once()
             ->andReturn('test');
 
+        $classMetadataFactory = Mockery::mock(ClassMetadataFactory::class);
+
         $entityManagerMock = $this->get(EntityManagerInterface::class);
         $entityManagerMock->shouldReceive('getMetadataFactory')
             ->once()
-            ->andReturnSelf();
-        $entityManagerMock->shouldReceive('getAllMetadata')
+            ->andReturn($classMetadataFactory);
+        $classMetadataFactory->shouldReceive('getAllMetadata')
             ->once()
             ->andReturn([$classMetadataMock]);
 

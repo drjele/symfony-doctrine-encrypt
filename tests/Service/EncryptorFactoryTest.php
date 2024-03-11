@@ -65,7 +65,7 @@ final class EncryptorFactoryTest extends AbstractTestCase
         /** @var EncryptorFactory|MockInterface $mock */
         $mock = $this->get(EncryptorFactory::class);
 
-        Type::addType(AES256Type::getFullName(), new AES256Type());
+        Type::addType(AES256Type::getFullName(), AES256Type::class);
 
         $type = $mock->getType(AES256Type::getFullName());
 

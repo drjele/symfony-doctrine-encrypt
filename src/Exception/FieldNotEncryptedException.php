@@ -8,4 +8,6 @@ declare(strict_types=1);
 
 namespace Drjele\Doctrine\Encrypt\Exception;
 
-class FieldNotEncryptedException extends Exception {}
+class FieldNotEncryptedException extends Exception
+{
+}
