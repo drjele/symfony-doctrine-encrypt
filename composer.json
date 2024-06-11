@@ -1,7 +1,7 @@
 {
     "name": "drjele/doctrine-encrypt",
     "type": "symfony-bundle",
-    "version": "v4.3.1",
+    "version": "v4.3.2",
     "description": "Doctrine encrypt type",
     "keywords": [
         "symfony",
@@ -23,7 +23,7 @@
         "doctrine/dbal": "3.*",
         "doctrine/orm": "3.*",
         "doctrine/persistence": "3.*",
-        "drjele/symfony-console": "3.*",
+        "drjele/symfony-console": "4.*",
         "symfony/config": "7.*"
     },
     "require-dev": {

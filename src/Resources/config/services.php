@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Drjele\Doctrine\Encrypt\Command\AbstractDatabaseCommand;
 use Drjele\Doctrine\Encrypt\Command\DatabaseDecryptCommand;
 use Drjele\Doctrine\Encrypt\Command\DatabaseEncryptCommand;
+use Drjele\Doctrine\Encrypt\DependencyInjection\DrjeleDoctrineEncryptExtension;
 use Drjele\Doctrine\Encrypt\Encryptor\AbstractEncryptor;
 use Drjele\Doctrine\Encrypt\Encryptor\AES256Encryptor;
 use Drjele\Doctrine\Encrypt\Encryptor\AES256FixedEncryptor;
@@ -18,26 +19,24 @@ use Symfony\Component\DependencyInjection\Reference;
 return function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
 
-    $encryptorTag = 'drjele.doctrine.encryptor';
-
     $services->set(AbstractEncryptor::class)
         ->abstract()
         ->arg('$salt', '%drjele_doctrine_encrypt.salt%');
 
     $services->set(AES256Encryptor::class)
         ->parent(AbstractEncryptor::class)
-        ->tag($encryptorTag);
+        ->tag(DrjeleDoctrineEncryptExtension::DOCTRINE_ENCRYPTOR);
 
     $services->set(FakeEncryptor::class)
-        ->tag($encryptorTag);
+        ->tag(DrjeleDoctrineEncryptExtension::DOCTRINE_ENCRYPTOR);
 
     $services->set(AES256FixedEncryptor::class)
         ->parent(AbstractEncryptor::class)
-        ->tag($encryptorTag);
+        ->tag(DrjeleDoctrineEncryptExtension::DOCTRINE_ENCRYPTOR);
 
     $services->set(EncryptorFactory::class)
         ->public()
-        ->arg('$encryptors', new TaggedIteratorArgument($encryptorTag));
+        ->arg('$encryptors', new TaggedIteratorArgument(DrjeleDoctrineEncryptExtension::DOCTRINE_ENCRYPTOR));
 
     $services->set(AbstractDatabaseCommand::class)
         ->abstract()

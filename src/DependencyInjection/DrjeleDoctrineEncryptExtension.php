@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 class DrjeleDoctrineEncryptExtension extends Extension
 {
+    public const DOCTRINE_ENCRYPTOR = 'drjele.doctrine.encryptor';
+
     public function load(array $configs, ContainerBuilder $containerBuilder): void
     {
         $loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config'));
