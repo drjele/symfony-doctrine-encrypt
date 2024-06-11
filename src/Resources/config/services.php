@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Drjele\Doctrine\Encrypt\Command\AbstractDatabaseCommand;
 use Drjele\Doctrine\Encrypt\Command\DatabaseDecryptCommand;
 use Drjele\Doctrine\Encrypt\Command\DatabaseEncryptCommand;
