@@ -13,8 +13,8 @@ use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 
-return function (ContainerConfigurator $configurator) {
-    $services = $configurator->services();
+return function (ContainerConfigurator $containerConfigurator) {
+    $services = $containerConfigurator->services();
 
     $encryptorTag = 'drjele.doctrine.encryptor';
 
