@@ -1,5 +1,7 @@
 # Doctrine encrypt
 
+**NO LONGER MAINTAINED, MOVED TO https://gitlab.com/precision-soft-open-source/symfony/doctrine-encrypt**
+
 The bundle will automatically register the types from **\Drjele\Doctrine\Encrypt\Type** as Doctrine types.
 
 It can be used for any string field.
